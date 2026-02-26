@@ -10,6 +10,7 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 DISTRICT_PATH = Path("data_processed/bd_admin_district.geojson")
+DISTRICT_REAL_PATH = Path("data_processed/bd_districts_real.geojson")
 UPAZILA_PATH = Path("data_processed/bd_admin_upazila.geojson")
 
 
@@ -31,6 +32,9 @@ def _find_feature(collection: dict[str, Any], field: str, code: str) -> dict[str
 
 @router.get("/districts")
 def get_districts() -> dict[str, Any]:
+    # Use real GADM boundaries if available, fall back to simplified
+    if DISTRICT_REAL_PATH.exists():
+        return _read_geojson(str(DISTRICT_REAL_PATH))
     return _read_geojson(str(DISTRICT_PATH))
 
 

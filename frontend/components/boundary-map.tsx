@@ -14,8 +14,10 @@ type Intensity = "none" | "watch" | "high" | "extreme";
 type ViewMode = "historical" | "forecast" | "exposure";
 type ForecastBand = "low" | "watch" | "high" | "extreme";
 type ExposureMetric = "population" | "mobility";
+type HistoricalMetric = "intensity" | "tmax";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+const BD_BOUNDS: [[number, number], [number, number]] = [[20.2, 87.5], [26.9, 93.2]];
 
 const fillByCategory: Record<Intensity, string> = {
   none: "#f3f4f6",
@@ -26,7 +28,10 @@ const fillByCategory: Record<Intensity, string> = {
 
 export default function BoundaryMap() {
   const [viewMode, setViewMode] = useState<ViewMode>("historical");
+  const [historicalMetric, setHistoricalMetric] = useState<HistoricalMetric>("intensity");
+  const [isPlaying, setIsPlaying] = useState(false);
   const [exposureMetric, setExposureMetric] = useState<ExposureMetric>("population");
+  const [districts, setDistricts] = useState<GeoJsonFeatureCollection | null>(null);
   const [upazilas, setUpazilas] = useState<GeoJsonFeatureCollection | null>(null);
   const [showUpazila, setShowUpazila] = useState(false);
   const [level, setLevel] = useState<TimeLevel>("daily");
@@ -57,9 +62,15 @@ export default function BoundaryMap() {
 
   useEffect(() => {
     const loadStatic = async () => {
-      const res = await fetch(`${API_BASE}/api/v1/admin/upazilas`);
-      if (res.ok) {
-        setUpazilas((await res.json()) as GeoJsonFeatureCollection);
+      const [districtRes, upazilaRes] = await Promise.all([
+        fetch(`${API_BASE}/api/v1/admin/districts`),
+        fetch(`${API_BASE}/api/v1/admin/upazilas`),
+      ]);
+      if (districtRes.ok) {
+        setDistricts((await districtRes.json()) as GeoJsonFeatureCollection);
+      }
+      if (upazilaRes.ok) {
+        setUpazilas((await upazilaRes.json()) as GeoJsonFeatureCollection);
       }
     };
     loadStatic().catch(() => null);
@@ -144,6 +155,35 @@ export default function BoundaryMap() {
     });
   }, [level, selectedDate]);
 
+  useEffect(() => {
+    if (!isPlaying) {
+      return;
+    }
+    if (viewMode === "exposure") {
+      setIsPlaying(false);
+      return;
+    }
+
+    const activeDates = viewMode === "historical" ? dates : forecastDates;
+    if (activeDates.length < 2) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      if (viewMode === "historical") {
+        setSelectedIndex((prev) => (prev + 1) % activeDates.length);
+      } else {
+        setForecastDate((prev) => {
+          const idx = activeDates.findIndex((d) => d === prev);
+          const next = idx >= 0 ? (idx + 1) % activeDates.length : 0;
+          return activeDates[next];
+        });
+      }
+    }, 900);
+
+    return () => window.clearInterval(timer);
+  }, [isPlaying, viewMode, dates, forecastDates]);
+
   const center = useMemo<[number, number]>(() => [23.685, 90.3563], []);
 
   // Force GeoJSON layer to remount when data or view changes (react-leaflet limitation)
@@ -190,6 +230,9 @@ export default function BoundaryMap() {
     if (!layer) {
       return null;
     }
+    if (historicalMetric === "tmax") {
+      return layer;
+    }
     return {
       ...layer,
       features: layer.features.filter((feature) => {
@@ -207,7 +250,24 @@ export default function BoundaryMap() {
     populationLayer,
     mobilityLayer,
     exposureMetric,
+    historicalMetric,
   ]);
+
+  const tmaxStats = useMemo(() => {
+    if (viewMode !== "historical" || !filteredLayer?.features?.length) {
+      return null;
+    }
+    const vals = filteredLayer.features
+      .map((f) => Number(f?.properties?.tmax_c))
+      .filter((v) => Number.isFinite(v));
+    if (!vals.length) {
+      return null;
+    }
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    return { min, max, avg };
+  }, [viewMode, filteredLayer]);
 
   const toggleCategory = (category: Intensity) => {
     setEnabled((prev) => ({ ...prev, [category]: !prev[category] }));
@@ -234,6 +294,19 @@ export default function BoundaryMap() {
             <select value={level} onChange={(e) => setLevel(e.target.value as TimeLevel)}>
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
+            </select>
+          </label>
+        )}
+
+        {viewMode === "historical" && (
+          <label>
+            Historical metric{" "}
+            <select
+              value={historicalMetric}
+              onChange={(e) => setHistoricalMetric(e.target.value as HistoricalMetric)}
+            >
+              <option value="intensity">Intensity class</option>
+              <option value="tmax">Tmax (°C)</option>
             </select>
           </label>
         )}
@@ -281,10 +354,27 @@ export default function BoundaryMap() {
           <input type="checkbox" checked={showUpazila} onChange={() => setShowUpazila((v) => !v)} />
           Show upazila outlines
         </label>
+
+        {viewMode !== "exposure" && (
+          <button
+            type="button"
+            onClick={() => setIsPlaying((v) => !v)}
+            disabled={(viewMode === "historical" ? dates : forecastDates).length < 2}
+            style={{
+              border: "1px solid #d1d5db",
+              background: "#ffffff",
+              borderRadius: "0.4rem",
+              padding: "0.3rem 0.7rem",
+              cursor: "pointer",
+            }}
+          >
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+        )}
       </div>
 
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
-        {viewMode === "historical" &&
+        {viewMode === "historical" && historicalMetric === "intensity" &&
           (["none", "watch", "high", "extreme"] as Intensity[]).map((category) => (
             <label key={category} style={{ display: "inline-flex", gap: "0.35rem", alignItems: "center" }}>
               <input
@@ -327,12 +417,39 @@ export default function BoundaryMap() {
           ))}
       </div>
 
-      <div style={{ borderRadius: "0.75rem", overflow: "hidden" }}>
-        <MapContainer center={center} zoom={7} style={{ height: "520px", width: "100%" }}>
+      <div style={{ borderRadius: "0.75rem", overflow: "hidden", border: "2px solid #1e293b" }}>
+        <MapContainer
+          center={center}
+          zoom={7}
+          style={{ height: "520px", width: "100%" }}
+          maxBounds={BD_BOUNDS as any}
+          maxBoundsViscosity={0.85}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            opacity={0.75}
           />
+          {/* District boundaries - prominent */}
+          {districts && (
+            <GeoJSON
+              data={districts as any}
+              onEachFeature={(feature, leafletLayer) => {
+                const p = feature?.properties ?? {};
+                const districtName = p.NAME_2 ?? p.district_name ?? "District";
+                const divisionName = p.NAME_1 ?? "";
+                const label = divisionName 
+                  ? `<b>${districtName}</b><br/><span style="color:#64748b">${divisionName} Division</span>`
+                  : `<b>${districtName}</b>`;
+                leafletLayer.bindTooltip(label, { sticky: true });
+              }}
+              style={{
+                color: "#0f172a",
+                weight: 2,
+                fillOpacity: 0,
+              }}
+            />
+          )}
           {filteredLayer && (
             <GeoJSON
               key={layerKey}
@@ -371,7 +488,7 @@ export default function BoundaryMap() {
                       : Number(p.movement_intensity_proxy ?? 0);
                   return {
                     color: "#1f2937",
-                    weight: 1,
+                    weight: 1.4,
                     fillColor: exposureColor(value, exposureMetric),
                     fillOpacity: 0.7,
                   };
@@ -379,9 +496,23 @@ export default function BoundaryMap() {
                 const category = (viewMode === "historical"
                   ? feature?.properties?.intensity_category ?? "none"
                   : feature?.properties?.risk_band ?? "low") as string;
+                if (viewMode === "historical" && historicalMetric === "tmax") {
+                  const t = Number(feature?.properties?.tmax_c ?? 0);
+                  const c =
+                    t >= 40 ? "#7f1d1d" :
+                    t >= 38 ? "#b45309" :
+                    t >= 36 ? "#ea580c" :
+                    t >= 34 ? "#f59e0b" : "#fde68a";
+                  return {
+                    color: "#334155",
+                    weight: 1.4,
+                    fillColor: c,
+                    fillOpacity: 0.75,
+                  };
+                }
                 return {
                   color: "#334155",
-                  weight: 1,
+                  weight: 1.4,
                   fillColor:
                     viewMode === "historical"
                       ? fillByCategory[category as Intensity]
@@ -408,11 +539,18 @@ export default function BoundaryMap() {
       {/* Legend */}
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.6rem", alignItems: "center", fontSize: "0.82rem", color: "#374151" }}>
         <span style={{ fontWeight: 600 }}>Legend:</span>
-        {viewMode === "historical" &&
+        {viewMode === "historical" && historicalMetric === "intensity" &&
           (["none", "watch", "high", "extreme"] as Intensity[]).map((cat) => (
             <span key={cat} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
               <span style={{ width: 14, height: 14, background: fillByCategory[cat], border: "1px solid #9ca3af", borderRadius: 2, display: "inline-block" }} />
               {cat}
+            </span>
+          ))}
+        {viewMode === "historical" && historicalMetric === "tmax" &&
+          ([["<34°C", "#fde68a"], ["34–36°C", "#f59e0b"], ["36–38°C", "#ea580c"], ["38–40°C", "#b45309"], [">40°C", "#7f1d1d"]] as [string, string][]).map(([l, c]) => (
+            <span key={l} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+              <span style={{ width: 14, height: 14, background: c, border: "1px solid #9ca3af", borderRadius: 2, display: "inline-block" }} />
+              {l}
             </span>
           ))}
         {viewMode === "forecast" &&
@@ -439,8 +577,17 @@ export default function BoundaryMap() {
               {l}
             </span>
           ))}
-        <span style={{ marginLeft: "0.5rem", color: "#6b7280" }}>· Hover districts for details</span>
+        <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginLeft: "0.5rem" }}>
+          <span style={{ width: 20, height: 0, borderTop: "2.5px solid #0f172a", display: "inline-block" }} />
+          District
+        </span>
+        <span style={{ marginLeft: "0.5rem", color: "#6b7280" }}>· Hover for details</span>
       </div>
+      {viewMode === "historical" && tmaxStats && (
+        <div style={{ marginTop: "0.5rem", fontSize: "0.88rem", color: "#374151" }}>
+          <strong>{selectedDate}</strong> · Min Tmax: {tmaxStats.min.toFixed(1)}°C · Avg Tmax: {tmaxStats.avg.toFixed(1)}°C · Max Tmax: {tmaxStats.max.toFixed(1)}°C
+        </div>
+      )}
 
       {viewMode === "forecast" && (
         <div style={{ marginTop: "0.75rem", fontSize: "0.9rem" }}>
