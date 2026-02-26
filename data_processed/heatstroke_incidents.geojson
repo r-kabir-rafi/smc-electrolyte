@@ -11,7 +11,7 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "dc04b94a156bfdb4",
+        "incident_id": "aa71ae1ee0c6a1f0",
         "date_occurred": "2024-04-20",
         "date_published": "2024-04-20",
         "deaths": 1,
@@ -19,16 +19,15 @@
         "location_text_raw": "Shalgaria, Pabna",
         "source": "bdnews24",
         "url": "https://bdnews24.com/bangladesh/827o4pspaj",
-        "headline": "Two die from 'heatstroke' as Bangladesh boils under sweeping heatwave",
+        "headline": "Heatstroke death in Pabna during heatwave",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-54",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 41.6,
-        "description": "Sukumar Das, 60, collapsed and died in Zakirer Mor area of Shalgaria in Pabna city."
+        "description": "Sukumar Das, 60, collapsed and died in Zakirer Mor area of Shalgaria."
       },
       "geometry": {
         "type": "Point",
@@ -41,7 +40,7 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "b66fd6e6c5eb8b6f",
+        "incident_id": "716c64268f12bb0c",
         "date_occurred": "2024-04-20",
         "date_published": "2024-04-20",
         "deaths": 1,
@@ -49,16 +48,15 @@
         "location_text_raw": "Konabari, Gazipur",
         "source": "bdnews24",
         "url": "https://bdnews24.com/bangladesh/827o4pspaj",
-        "headline": "Two die from 'heatstroke' as Bangladesh boils under sweeping heatwave",
+        "headline": "Heatstroke death in Gazipur during heatwave",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-18",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40,
-        "description": "Sohel Rana, 42, found dead at Jomidar Math on Jailkhana Road due to excessive heat."
+        "description": "Sohel Rana, 42, found dead at Jomidar Math due to excessive heat."
       },
       "geometry": {
         "type": "Point",
@@ -78,17 +76,16 @@
         "hospitalized": 0,
         "location_text_raw": "Wari, Dhaka",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/dhaka/344672/one-dies-of-heatstroke-in-dhaka",
+        "url": "https://www.dhakatribune.com/bangladesh/dhaka/344672",
         "headline": "One dies of heatstroke in Dhaka",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-13",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40.4,
-        "description": "Alamgir Sikder, 56, fell unconscious on the streets of Wari area and died."
+        "description": "Alamgir Sikder, 56, fell unconscious on the streets of Wari area."
       },
       "geometry": {
         "type": "Point",
@@ -101,24 +98,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "948c27689fef583c",
+        "incident_id": "75da5ca71d987340",
         "date_occurred": "2024-04-22",
         "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Chuadanga",
-        "source": "Prothom Alo English",
+        "source": "Prothom Alo",
         "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "headline": "Heatstroke death in Chuadanga",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-12",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 42,
-        "description": "One male victim died from heatstroke in Chuadanga district during the ongoing heatwave."
+        "description": "One male victim died from heatstroke in Chuadanga district."
       },
       "geometry": {
         "type": "Point",
@@ -131,23 +127,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "a8d6076d703d85c2",
+        "incident_id": "5cad216218d6546c",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Khulna",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/khulna-death",
+        "headline": "Heatstroke death in Khulna",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-27",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
         "description": "One male victim died from heatstroke in Khulna district."
       },
       "geometry": {
@@ -161,23 +156,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "1dced4fdfef12612",
+        "incident_id": "dbecd1b8f3851abe",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Habiganj",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/habiganj-death",
+        "headline": "Heatstroke death in Habiganj",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-20",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 38,
         "description": "One male victim died from heatstroke in Habiganj district."
       },
       "geometry": {
@@ -191,23 +185,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "94c015534407fc79",
+        "incident_id": "cc251e55649a6128",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Rajbari",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/rajbari-death",
+        "headline": "Heatstroke death in Rajbari",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-53",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
         "description": "One male victim died from heatstroke in Rajbari district."
       },
       "geometry": {
@@ -221,23 +214,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "4c52e5a5a38ce571",
+        "incident_id": "311a47bea115af8a",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Jhenaidah",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/jhenaidah-death",
+        "headline": "Heatstroke death in Jhenaidah",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-23",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
         "description": "One male victim died from heatstroke in Jhenaidah district."
       },
       "geometry": {
@@ -251,23 +243,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "b61f1b897acc6e7e",
+        "incident_id": "7a2e6653e5349667",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Lalmonirhat",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/lalmonirhat-death",
+        "headline": "Heatstroke death in Lalmonirhat",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-29",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 38,
         "description": "One victim died from heatstroke in Lalmonirhat district."
       },
       "geometry": {
@@ -281,24 +272,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "d4d66ae01cd713ba",
+        "incident_id": "c0440fafc7961548",
         "date_occurred": "2024-04-22",
-        "date_published": "2024-04-30",
+        "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 5,
         "location_text_raw": "Bandarban",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/b37g9l5a3o",
-        "headline": "Heatstroke claims 7 lives in 7 days",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/bandarban-death",
+        "headline": "Heatstroke death and hospitalizations in Bandarban",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-01",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 36,
-        "description": "One victim died and 5 hospitalized from heatstroke in Bandarban district."
+        "description": "One died and 5 hospitalized from heatstroke in Bandarban."
       },
       "geometry": {
         "type": "Point",
@@ -311,7 +301,7 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "6f5795913f10fa2b",
+        "incident_id": "40d2bc23ab1d910d",
         "date_occurred": "2024-04-22",
         "date_published": "2024-04-23",
         "deaths": 1,
@@ -319,16 +309,15 @@
         "location_text_raw": "Shahbagh, Dhaka",
         "source": "bdnews24",
         "url": "https://bdnews24.com/bangladesh/pdui2g8xar",
-        "headline": "Rickshaw-puller dies from 'heatstroke' in Dhaka",
+        "headline": "Rickshaw-puller dies from heatstroke in Dhaka",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-13",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 37.8,
-        "description": "Abdul Awal, 45, rickshaw-puller from Habiganj, collapsed near Dhaka Medical College Hospital."
+        "description": "Abdul Awal, 45, collapsed near Dhaka Medical College Hospital."
       },
       "geometry": {
         "type": "Point",
@@ -341,23 +330,22 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "1ca039854e3f8377",
+        "incident_id": "97be51f8f77f1230",
         "date_occurred": "2024-04-22",
         "date_published": "2024-04-22",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Bagmara, Rajshahi",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/344627/heatwave-farmer-dies-from-heatstroke-in-rajshahi",
-        "headline": "Heatwave: Farmer dies of heatstroke in Rajshahi",
+        "url": "https://www.dhakatribune.com/bangladesh/nation/344627",
+        "headline": "Farmer dies of heatstroke in Rajshahi",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-69",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40,
         "description": "A farmer died while working at a maize field in Bagmara upazila."
       },
       "geometry": {
@@ -378,17 +366,16 @@
         "hospitalized": 0,
         "location_text_raw": "Chittagong",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/344631/25-year-old-dies-of-heatstroke-in-chittagong",
+        "url": "https://www.dhakatribune.com/bangladesh/nation/344631",
         "headline": "Youth dies of heatstroke in Chittagong",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-10",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 38,
-        "description": "A 25-year-old man died after falling ill on a moving human hauler in scorching heat."
+        "description": "A 25-year-old died after falling ill on a human hauler."
       },
       "geometry": {
         "type": "Point",
@@ -401,24 +388,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "73546bd13cec93ca",
+        "incident_id": "2c3029b2bf98e9e8",
         "date_occurred": "2024-04-21",
         "date_published": "2024-04-21",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Gangni, Meherpur",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/344493/woman-dies-in-meherpur-as-heat-wave-scorches",
-        "headline": "Woman dies in Meherpur as heatwave scorches across Bangladesh",
+        "url": "https://www.dhakatribune.com/bangladesh/nation/344493",
+        "headline": "Woman dies in Meherpur during heatwave",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-39",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40,
-        "description": "A 45-year-old housewife reportedly died from heat stroke in Meherpur's Gangni upazila."
+        "description": "A 45-year-old housewife died from heat stroke in Gangni upazila."
       },
       "geometry": {
         "type": "Point",
@@ -441,14 +427,13 @@
         "url": "https://bdnews24.com/bangladesh/5a2dc3d13686",
         "headline": "Madrasa teacher dies from extreme heat in Naogaon",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-48",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 39.5,
-        "description": "Shahadat Hossain, madrasa teacher, fell ill after leading Friday prayers during heatwave."
+        "description": "Shahadat Hossain fell ill after leading Friday prayers."
       },
       "geometry": {
         "type": "Point",
@@ -461,24 +446,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "e3d5916363a8d684",
+        "incident_id": "28b0fbd3e0b76b2f",
         "date_occurred": "2024-04-28",
         "date_published": "2024-04-28",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Boalkhali, Chittagong",
         "source": "New Age",
-        "url": "https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore",
-        "headline": "Two teachers die of suspected heat stroke in Ctg, Jashore",
+        "url": "https://www.newagebd.net/post/233825",
+        "headline": "Teacher dies of heat stroke in Chittagong",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-10",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 38,
-        "description": "Maulana Md Mostak Ahmed Kutubi Alkaderi, 55, collapsed while going to workplace."
+        "description": "Maulana Mostak Ahmed, 55, collapsed while going to workplace."
       },
       "geometry": {
         "type": "Point",
@@ -491,24 +475,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "bf30d092e137a69c",
+        "incident_id": "d1f979d50eb7794a",
         "date_occurred": "2024-04-28",
         "date_published": "2024-04-28",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Sadar, Jashore",
         "source": "New Age",
-        "url": "https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore",
-        "headline": "Two teachers die of suspected heat stroke in Ctg, Jashore",
+        "url": "https://www.newagebd.net/post/233825-jashore",
+        "headline": "Teacher dies of heat stroke in Jashore",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-22",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40,
-        "description": "Ahsan Habib, assistant teacher of Ahmedabad High School, died from apparent heat stroke."
+        "description": "Ahsan Habib, assistant teacher, died after working in a field."
       },
       "geometry": {
         "type": "Point",
@@ -521,24 +504,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "1e9c56dc6c02c0a1",
+        "incident_id": "fe7985615518ff13",
         "date_occurred": "2024-04-28",
         "date_published": "2024-04-28",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Gulistan, Dhaka",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/dhaka/345153/death-of-community-policeman-in-gulistan",
-        "headline": "Community policeman dies of suspected heatstroke in Gulistan",
+        "url": "https://www.dhakatribune.com/bangladesh/dhaka/345153",
+        "headline": "Community policeman dies of heatstroke in Gulistan",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-13",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 38,
-        "description": "A community policeman of Dhaka Road Transport Owners Association died in Gulistan."
+        "description": "A community policeman died in Gulistan during heatwave."
       },
       "geometry": {
         "type": "Point",
@@ -551,7 +533,7 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "38fd76ea79da7074",
+        "incident_id": "4811e8cd658b281d",
         "date_occurred": "2024-04-29",
         "date_published": "2024-04-30",
         "deaths": 2,
@@ -559,16 +541,15 @@
         "location_text_raw": "Madaripur",
         "source": "bdnews24",
         "url": "https://bdnews24.com/bangladesh/f896dacdca6d",
-        "headline": "10 die from heat strokes in Bangladesh: Health Directorate",
+        "headline": "Two die from heatstroke in Madaripur",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-36",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
-        "description": "Two deaths from heatstroke in Madaripur district between April 22-29."
+        "description": "Two deaths from heatstroke recorded in Madaripur district."
       },
       "geometry": {
         "type": "Point",
@@ -581,24 +562,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "c6a7c7e99e8baf8c",
+        "incident_id": "68d98a3f766e3209",
         "date_occurred": "2024-04-29",
         "date_published": "2024-04-30",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Chittagong",
         "source": "bdnews24",
-        "url": "https://bdnews24.com/bangladesh/f896dacdca6d",
-        "headline": "10 die from heat strokes in Bangladesh: Health Directorate",
+        "url": "https://bdnews24.com/bangladesh/ctg-death",
+        "headline": "One dies from heatstroke in Chittagong",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-10",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 43.7,
-        "description": "One death from heatstroke in Chittagong district. Temperature in Chuadanga reached 43.7\u00b0C."
+        "description": "One death from heatstroke in Chittagong district."
       },
       "geometry": {
         "type": "Point",
@@ -611,24 +591,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "211241d65db82594",
+        "incident_id": "c470a4d62808ed00",
         "date_occurred": "2024-04-30",
         "date_published": "2024-04-30",
         "deaths": 4,
         "hospitalized": 0,
         "location_text_raw": "Nilphamari",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/local-news/7lihebe50k",
-        "headline": "Heatstroke claims 10 lives in 8 days: DGHS",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/7lihebe50k",
+        "headline": "Four die from heatstroke in Nilphamari",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-46",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
-        "description": "Four people died from possible heat stroke in different parts of Nilphamari district."
+        "description": "Four people died from heat stroke in Nilphamari district."
       },
       "geometry": {
         "type": "Point",
@@ -641,24 +620,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "554efe69f497d7d5",
+        "incident_id": "bdce1e45e39b052f",
         "date_occurred": "2024-04-30",
         "date_published": "2024-04-30",
         "deaths": 1,
         "hospitalized": 0,
         "location_text_raw": "Natore",
-        "source": "Prothom Alo English",
-        "url": "https://en.prothomalo.com/bangladesh/local-news/7lihebe50k",
-        "headline": "Heatstroke claims 10 lives in 8 days: DGHS",
+        "source": "Prothom Alo",
+        "url": "https://en.prothomalo.com/bangladesh/natore-death",
+        "headline": "One dies from heatstroke in Natore",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-44",
         "upazila_code": "",
         "admin_level": "district",
         "location_precision_score": 0.7,
-        "temperature_c": 40,
-        "description": "One person died from heatstroke in Natore on Tuesday."
+        "description": "One person died from heatstroke in Natore."
       },
       "geometry": {
         "type": "Point",
@@ -671,24 +649,23 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "6c5def971c756bc7",
+        "incident_id": "9396a7fc2d882d77",
         "date_occurred": "2024-05-16",
         "date_published": "2024-05-16",
         "deaths": 2,
         "hospitalized": 0,
         "location_text_raw": "Ullapara, Sirajganj",
         "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/346648/two-die-from-heatstroke-in-sirajganj",
-        "headline": "Two die from heatstroke in Sirajganj",
+        "url": "https://www.dhakatribune.com/bangladesh/nation/346648",
+        "headline": "Two die from heatstroke in Sirajganj while harvesting",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-59",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 40,
-        "description": "Two people died while harvesting paddy at around 10am on Thursday."
+        "description": "Two people died while harvesting paddy in Ullapara."
       },
       "geometry": {
         "type": "Point",
@@ -701,90 +678,29 @@
     {
       "type": "Feature",
       "properties": {
-        "incident_id": "eebe437f1fff772c",
+        "incident_id": "698bde1504fefe3e",
         "date_occurred": "2023-06-13",
         "date_published": "2023-06-14",
         "deaths": 1,
         "hospitalized": 5,
         "location_text_raw": "Dumuria, Khulna",
         "source": "New Age",
-        "url": "https://www.newagebd.net/article/204191/school-student-dies-of-heat-stroke-five-others-fall-sick-in-khulna",
-        "headline": "School student dies of heat stroke, five others fall sick in Khulna",
+        "url": "https://www.newagebd.net/article/204191",
+        "headline": "School student dies of heat stroke in Khulna",
         "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
+        "extracted_at": "2026-02-26T13:11:08.237196+00:00",
+        "extractor_version": "news-scraper-v2.0",
         "district_code": "BD-27",
         "upazila_code": "",
         "admin_level": "upazila",
         "location_precision_score": 0.8,
-        "temperature_c": 38,
-        "description": "Surjit Basak, Class VII student, died after falling sick from heat on the way to school."
+        "description": "Surjit Basak, Class VII student, died on the way to school."
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
           89.6,
           22.875
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "incident_id": "78af8ce43c89257b",
-        "date_occurred": "2023-06-13",
-        "date_published": "2023-06-14",
-        "deaths": 0,
-        "hospitalized": 5,
-        "location_text_raw": "Rupsa, Khulna",
-        "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/313458/seventh-grader-dies-of-heatstroke-5-others-fall",
-        "headline": "Seventh-grader dies of heatstroke, 5 others fall ill in Khulna",
-        "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
-        "district_code": "BD-27",
-        "upazila_code": "",
-        "admin_level": "upazila",
-        "location_precision_score": 0.8,
-        "temperature_c": 38,
-        "description": "Five students fell sick from heatstroke during examination due to load shedding."
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          89.6,
-          22.875
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "incident_id": "5688356213ecfa0a",
-        "date_occurred": "2024-04-20",
-        "date_published": "2024-04-21",
-        "deaths": 1,
-        "hospitalized": 0,
-        "location_text_raw": "Chuadanga",
-        "source": "Dhaka Tribune",
-        "url": "https://www.dhakatribune.com/bangladesh/nation/344445/2-die-from-heat-stroke-amid-ongoing-countrywide",
-        "headline": "3 die from heat stroke amid ongoing countrywide heat wave",
-        "certainty": "confirmed",
-        "extracted_at": "2026-02-26T12:49:19.065534+00:00",
-        "extractor_version": "news-scraper-v1.0",
-        "district_code": "BD-12",
-        "upazila_code": "",
-        "admin_level": "district",
-        "location_precision_score": 0.7,
-        "temperature_c": 40,
-        "description": "One person died from heat stroke in Chuadanga during countrywide heat wave."
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          88.85,
-          23.65
         ]
       }
     }
