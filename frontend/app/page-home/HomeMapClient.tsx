@@ -1,21 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import L from "leaflet";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
 import styles from "./home.module.css";
-
-const MapContainer = dynamic(
-  () => import("react-leaflet").then((module) => module.MapContainer),
-  { ssr: false }
-);
-const TileLayer = dynamic(
-  () => import("react-leaflet").then((module) => module.TileLayer),
-  { ssr: false }
-);
-const GeoJSON = dynamic(() => import("react-leaflet").then((module) => module.GeoJSON), {
-  ssr: false,
-});
 
 type DistrictFeatureCollection = {
   type: "FeatureCollection";
@@ -35,12 +23,21 @@ function districtName(properties?: Record<string, string>): string {
   );
 }
 
+function FitToDistrictBounds({ bounds }: { bounds?: L.LatLngBounds }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!bounds) return;
+    map.fitBounds(bounds.pad(0.05));
+  }, [map, bounds]);
+
+  return null;
+}
+
 export default function HomeMapClient() {
   const [districts, setDistricts] = useState<DistrictFeatureCollection | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string>("None selected");
   const [error, setError] = useState<string>("");
-  const [map, setMap] = useState<L.Map | null>(null);
-  const [hasFitted, setHasFitted] = useState(false);
 
   const geoJsonRef = useRef<L.GeoJSON | null>(null);
 
@@ -64,15 +61,12 @@ export default function HomeMapClient() {
     });
   }, []);
 
-  useEffect(() => {
-    if (!map || !districts || hasFitted) return;
+  const mapBounds = useMemo(() => {
+    if (!districts) return undefined;
     const layer = L.geoJSON(districts as any);
     const bounds = layer.getBounds();
-    if (bounds.isValid()) {
-      map.fitBounds(bounds.pad(0.05));
-      setHasFitted(true);
-    }
-  }, [map, districts, hasFitted]);
+    return bounds.isValid() ? bounds : undefined;
+  }, [districts]);
 
   const defaultStyle = useMemo(
     () => ({
@@ -114,8 +108,9 @@ export default function HomeMapClient() {
             center={[23.7, 90.4]}
             zoom={7}
             style={{ height: "100%", width: "100%" }}
-            whenReady={(event) => setMap(event.target)}
+            bounds={mapBounds}
           >
+            <FitToDistrictBounds bounds={mapBounds} />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

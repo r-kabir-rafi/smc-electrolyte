@@ -14,6 +14,36 @@
   color: #475569;
 }
 
+.mapBlock {
+  margin-bottom: 1rem;
+}
+
+.mapMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.55rem;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.mapContainer {
+  height: 46vh;
+  min-height: 340px;
+  border: 1px solid #dbe2ea;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.errorText {
+  margin: 0.6rem 0 0;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
 .filters {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
