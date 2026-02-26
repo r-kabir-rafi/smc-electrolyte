@@ -62,10 +62,7 @@ html, body {
   letter-spacing: -0.02em;
 }
 
-.brand-link::before {
-  content: "🔥";
-  font-size: 1.4rem;
-}
+
 
 .menu-links {
   display: flex;

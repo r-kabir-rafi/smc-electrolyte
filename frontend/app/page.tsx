@@ -66,14 +66,14 @@ export default async function Home() {
           <div style={{ display: "flex", gap: "2.5rem", flexWrap: "wrap", alignItems: "flex-start" }}>
             <div>
               <div style={{ fontSize: "0.7rem", fontWeight: 600, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.3rem" }}>
-                📅 As of date
+                As of date
               </div>
               <div style={{ fontWeight: 700, fontSize: "1.35rem", color: "#0f172a" }}>{summary.as_of_date ?? "N/A"}</div>
             </div>
             {extremeCount > 0 && (
               <div>
                 <div style={{ fontSize: "0.7rem", fontWeight: 600, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.3rem" }}>
-                  🔴 Extreme
+                  Extreme
                 </div>
                 <div style={{ fontWeight: 700, fontSize: "1.35rem", color: "#dc2626" }}>{extremeCount} districts</div>
               </div>
@@ -81,14 +81,14 @@ export default async function Home() {
             {highCount > 0 && (
               <div>
                 <div style={{ fontSize: "0.7rem", fontWeight: 600, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.3rem" }}>
-                  🟠 High Heat
+                  High Heat
                 </div>
                 <div style={{ fontWeight: 700, fontSize: "1.35rem", color: "#ea580c" }}>{highCount} districts</div>
               </div>
             )}
             <div style={{ flex: 1, minWidth: "280px" }}>
               <div style={{ fontSize: "0.7rem", fontWeight: 600, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem" }}>
-                🌡️ Top Hotspot Districts
+                Top Hotspot Districts
               </div>
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                 {hotspots.slice(0, 6).map((h) => (
@@ -117,7 +117,7 @@ export default async function Home() {
               background: health === "ok" ? "#d1fae5" : "#fee2e2",
               borderRadius: "999px",
             }}>
-              <span style={{ fontSize: "0.6rem" }}>●</span> API: {health}
+              API: {health}
             </div>
           </div>
         </section>
@@ -125,7 +125,7 @@ export default async function Home() {
 
       <section className="card" style={{ padding: "0", overflow: "hidden" }}>
         <div style={{ padding: "1rem 1.25rem", borderBottom: "1px solid #e2e8f0", background: "linear-gradient(180deg, #f8fafc 0%, #fff 100%)" }}>
-          <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 600 }}>🗺️ Heatwave Intensity Map</h2>
+          <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 600 }}>Heatwave Intensity Map</h2>
         </div>
         <div style={{ padding: "1rem" }}>
           <MapWrapper />
