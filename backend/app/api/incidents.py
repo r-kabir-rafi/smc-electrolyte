@@ -22,6 +22,44 @@ UPAZILA_PATH = Path("data_processed/bd_admin_upazila.geojson")
 
 DATE_RE = r"^\d{4}-\d{2}-\d{2}$"
 
+DIVISION_DISTRICTS: dict[str, set[str]] = {
+    "barishal": {"barguna", "barishal", "bhola", "jhalokati", "patuakhali", "pirojpur"},
+    "chattogram": {
+        "bandarban",
+        "brahmanbaria",
+        "chandpur",
+        "chattogram",
+        "chittagong",
+        "comilla",
+        "cox's bazar",
+        "feni",
+        "khagrachhari",
+        "lakshmipur",
+        "noakhali",
+        "rangamati",
+    },
+    "dhaka": {
+        "dhaka",
+        "faridpur",
+        "gazipur",
+        "gopalganj",
+        "kishoreganj",
+        "madaripur",
+        "manikganj",
+        "munshiganj",
+        "narayanganj",
+        "narsingdi",
+        "rajbari",
+        "shariatpur",
+        "tangail",
+    },
+    "khulna": {"bagerhat", "chuadanga", "jashore", "jhenaidah", "khulna", "kushtia", "magura", "meherpur", "narail", "satkhira"},
+    "mymensingh": {"jamalpur", "mymensingh", "netrokona", "sherpur"},
+    "rajshahi": {"bogra", "chapainawabganj", "joypurhat", "naogaon", "natore", "nawabganj", "pabna", "rajshahi", "sirajganj"},
+    "rangpur": {"dinajpur", "gaibandha", "kurigram", "lalmonirhat", "nilphamari", "panchagarh", "rangpur", "thakurgaon"},
+    "sylhet": {"habiganj", "moulvibazar", "sunamganj", "sylhet"},
+}
+
 
 def _parse_iso_date(value: str | None, field_name: str) -> date | None:
     if value in (None, ""):
@@ -187,6 +225,7 @@ def _apply_filters(
     *,
     start_date: date | None,
     end_date: date | None,
+    division: str | None,
     district: str | None,
     incident_type: Literal["death", "injury", "all"],
     query: str | None,
@@ -209,6 +248,16 @@ def _apply_filters(
                 continue
             out.append(item)
         filtered = out
+
+    if division:
+        dkey = division.strip().lower()
+        districts = DIVISION_DISTRICTS.get(dkey, set())
+        if districts:
+            filtered = [
+                item
+                for item in filtered
+                if str(item.get("district") or "").strip().lower() in districts
+            ]
 
     if district:
         district_lower = district.strip().lower()
@@ -267,6 +316,7 @@ def list_incidents(
     response: Response,
     start_date: str | None = Query(default=None, pattern=DATE_RE),
     end_date: str | None = Query(default=None, pattern=DATE_RE),
+    division: str | None = Query(default=None),
     district: str | None = Query(default=None),
     type: Literal["death", "injury", "all"] = Query(default="all"),
     q: str | None = Query(default=None),
@@ -283,6 +333,7 @@ def list_incidents(
         _load_incidents(),
         start_date=start_dt,
         end_date=end_dt,
+        division=division,
         district=district,
         incident_type=type,
         query=q,
@@ -311,10 +362,18 @@ def incidents_districts(response: Response) -> dict[str, list[str]]:
     return {"districts": values}
 
 
+@router.get("/dates")
+def incidents_dates(response: Response) -> dict[str, list[str]]:
+    values = sorted({str(item.get("date_for_sort")) for item in _load_incidents() if item.get("date_for_sort")})
+    response.headers["Cache-Control"] = "public, max-age=3600"
+    return {"dates": values}
+
+
 @router.get("/export")
 def export_incidents_csv(
     start_date: str | None = Query(default=None, pattern=DATE_RE),
     end_date: str | None = Query(default=None, pattern=DATE_RE),
+    division: str | None = Query(default=None),
     district: str | None = Query(default=None),
     type: Literal["death", "injury", "all"] = Query(default="all"),
     q: str | None = Query(default=None),
@@ -329,6 +388,7 @@ def export_incidents_csv(
         _load_incidents(),
         start_date=start_dt,
         end_date=end_dt,
+        division=division,
         district=district,
         incident_type=type,
         query=q,
