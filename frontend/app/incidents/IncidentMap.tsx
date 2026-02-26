@@ -2,7 +2,7 @@
 
 import L from "leaflet";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CircleMarker, GeoJSON, MapContainer, TileLayer, Tooltip, useMap } from "react-leaflet";
+import { CircleMarker, GeoJSON, MapContainer, TileLayer, Tooltip } from "react-leaflet";
 import { loadIncidentsCsv, type IncidentRecord } from "../../lib/data";
 import styles from "./incidents.module.css";
 
@@ -52,18 +52,6 @@ function jitterPoint(center: L.LatLng, order: number): L.LatLng {
     (Math.cos(angle) * distance) / Math.max(Math.cos((center.lat * Math.PI) / 180), 0.25);
 
   return L.latLng(lat, lng);
-}
-
-function CleanupMapOnUnmount() {
-  const map = useMap();
-
-  useEffect(() => {
-    return () => {
-      map.remove();
-    };
-  }, [map]);
-
-  return null;
 }
 
 export default function IncidentMap() {
@@ -181,7 +169,6 @@ export default function IncidentMap() {
           scrollWheelZoom
           style={{ height: "100%", width: "100%" }}
         >
-          <CleanupMapOnUnmount />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

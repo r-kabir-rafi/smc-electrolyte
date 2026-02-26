@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { exportIncidentsCsv, loadIncidentsCsv, type IncidentRecord } from "../../lib/data";
 import styles from "./incidents.module.css";
@@ -18,16 +17,18 @@ function sortIndicator(active: boolean, direction: SortDirection): string {
   return direction === "asc" ? " ▲" : " ▼";
 }
 
-export default function IncidentTable() {
-  const searchParams = useSearchParams();
+type IncidentTableProps = {
+  initialDistrict?: string;
+};
 
+export default function IncidentTable({ initialDistrict = "" }: IncidentTableProps) {
   const [rows, setRows] = useState<IncidentRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [district, setDistrict] = useState("");
+  const [district, setDistrict] = useState(initialDistrict);
   const [query, setQuery] = useState("");
 
   const [sortKey, setSortKey] = useState<SortKey>("reporting_date");
@@ -37,9 +38,8 @@ export default function IncidentTable() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const districtFromQuery = searchParams.get("district")?.trim() || "";
-    setDistrict(districtFromQuery);
-  }, [searchParams]);
+    setDistrict(initialDistrict);
+  }, [initialDistrict]);
 
   useEffect(() => {
     const load = async () => {
