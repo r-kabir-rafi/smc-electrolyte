@@ -1,0 +1,13 @@
+area_type,district_code,district_name,heatwave_forecast_score,pop_exposure_score,mobility_proxy_score,smc_priority_score,smc_priority_rank,explainability_note,upazila_code,upazila_name
+district,BD-10,Chattogram,0.4299428571428571,0.9972556774926803,0.42671598491081114,0.5994913288013949,1,heatwave=0.430*0.5 + population=0.997*0.3 + mobility=0.427*0.2,,
+district,BD-13,Dhaka,0.1296,1.0,1.0,0.5648,2,heatwave=0.130*0.5 + population=1.000*0.3 + mobility=1.000*0.2,,
+district,BD-27,Khulna,0.11382857142857143,0.904384148169319,0.5783587609578793,0.44390128235665727,3,heatwave=0.114*0.5 + population=0.904*0.3 + mobility=0.578*0.2,,
+district,BD-06,Barishal,0.055428571428571424,0.9132363617062237,0.5911961234014426,0.41992441890644133,4,heatwave=0.055*0.5 + population=0.913*0.3 + mobility=0.591*0.2,,
+district,BD-60,Sylhet,0.3716571428571428,0.24838728184513428,0.0,0.2603447559821117,5,heatwave=0.372*0.5 + population=0.248*0.3 + mobility=0.000*0.2,,
+district,BD-69,Rajshahi,0.0,0.0,0.0614161938615352,0.01228323877230704,6,heatwave=0.000*0.5 + population=0.000*0.3 + mobility=0.061*0.2,,
+upazila,BD-10,Chattogram,0.6,0.9972556774926803,0.42671598491081114,0.6845199002299663,1,heatwave=0.600*0.5 + population=0.997*0.3 + mobility=0.427*0.2,BD-10-41,Patiya
+upazila,BD-13,Dhaka,0.156,1.0,1.0,0.5780000000000001,2,heatwave=0.156*0.5 + population=1.000*0.3 + mobility=1.000*0.2,BD-13-18,Dhamrai
+upazila,BD-27,Khulna,0.16,0.904384148169319,0.5783587609578793,0.4669869966423716,3,heatwave=0.160*0.5 + population=0.904*0.3 + mobility=0.578*0.2,BD-27-47,Dumuria
+upazila,BD-06,Barishal,0.076,0.9132363617062237,0.5911961234014426,0.4302101331921556,4,heatwave=0.076*0.5 + population=0.913*0.3 + mobility=0.591*0.2,BD-06-06,Babuganj
+upazila,BD-60,Sylhet,0.476,0.24838728184513428,0.0,0.31251618455354024,5,heatwave=0.476*0.5 + population=0.248*0.3 + mobility=0.000*0.2,BD-60-88,South Surma
+upazila,BD-69,Rajshahi,0.0,0.0,0.0614161938615352,0.01228323877230704,6,heatwave=0.000*0.5 + population=0.000*0.3 + mobility=0.061*0.2,BD-69-85,Paba

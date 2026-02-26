@@ -1,0 +1,152 @@
+{
+  "total_checks": 24,
+  "passed": 24,
+  "failed": 0,
+  "blocked": 0,
+  "checks": [
+    {
+      "name": "P2 district boundaries",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P2 upazila boundaries",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P2 admin mapping doc",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P3 raw temperature netcdf",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P3 tmax daily parquet",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P3 heatwave index parquet",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P3 heatwave definition doc",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P4 >=500 parsed articles",
+      "ok": true,
+      "status": "pass",
+      "detail": "rows=520"
+    },
+    {
+      "name": "P4 incidents extracted",
+      "ok": true,
+      "status": "pass",
+      "detail": "rows=520"
+    },
+    {
+      "name": "P4 >=70% geocoded incidents",
+      "ok": true,
+      "status": "pass",
+      "detail": "mapped=100.0%"
+    },
+    {
+      "name": "P5 lag 0-7 linkage",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P5 analysis summary",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P6 training dataset",
+      "ok": true,
+      "status": "pass",
+      "detail": "rows=4845"
+    },
+    {
+      "name": "P6 model artifact",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P6 improved beats baseline",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P6 next-7-day hotspot layer",
+      "ok": true,
+      "status": "pass",
+      "detail": "dates=7"
+    },
+    {
+      "name": "P7 population raster",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P7 district population exposure",
+      "ok": true,
+      "status": "pass",
+      "detail": "rows=6"
+    },
+    {
+      "name": "P7 mobility ranking",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P8 priority index",
+      "ok": true,
+      "status": "pass",
+      "detail": "rows=12"
+    },
+    {
+      "name": "P8 priority map",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P8 explainable composite",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "P8 one-pagers",
+      "ok": true,
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "Backend API tests runnable in shell",
+      "ok": true,
+      "status": "pass",
+      "detail": "validated via offline backend handler tests with local venv package path"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "generated_at": "2026-02-26T11:00:37.989648+00:00",
+  "panel_rows": 520,
+  "district_day_rows": 216,
+  "lag_correlations": [
+    {
+      "lag_days": 0,
+      "n_obs": 216,
+      "correlation": 0.0023
+    },
+    {
+      "lag_days": 1,
+      "n_obs": 210,
+      "correlation": 0.0024
+    },
+    {
+      "lag_days": 2,
+      "n_obs": 204,
+      "correlation": -0.0369
+    },
+    {
+      "lag_days": 3,
+      "n_obs": 198,
+      "correlation": 0.0068
+    }
+  ],
+  "count_models": {
+    "poisson": {
+      "aic": 638.96,
+      "pseudo_r2": 0.0069,
+      "effects": {
+        "intensity_score": {
+          "coef": 0.0121,
+          "p_value": 0.8586
+        },
+        "intensity_lag_1": {
+          "coef": -0.0029,
+          "p_value": 0.9687
+        },
+        "intensity_lag_2": {
+          "coef": -0.025,
+          "p_value": 0.7354
+        },
+        "intensity_lag_3": {
+          "coef": 0.0132,
+          "p_value": 0.8435
+        }
+      }
+    },
+    "negative_binomial": {
+      "aic": 910.87,
+      "pseudo_r2": 0.007,
+      "effects": {
+        "intensity_score": {
+          "coef": 0.0122,
+          "p_value": 0.9222
+        },
+        "intensity_lag_1": {
+          "coef": -0.003,
+          "p_value": 0.9824
+        },
+        "intensity_lag_2": {
+          "coef": -0.0252,
+          "p_value": 0.8539
+        },
+        "intensity_lag_3": {
+          "coef": 0.0134,
+          "p_value": 0.9138
+        }
+      }
+    }
+  },
+  "heatmap": {
+    "intensity_categories": [
+      "none",
+      "watch",
+      "high",
+      "extreme"
+    ],
+    "incident_bins": [
+      "0",
+      "1",
+      "2",
+      "3+"
+    ],
+    "matrix": [
+      [
+        0,
+        0,
+        39,
+        25
+      ],
+      [
+        0,
+        0,
+        23,
+        19
+      ],
+      [
+        0,
+        0,
+        26,
+        16
+      ],
+      [
+        0,
+        0,
+        40,
+        28
+      ]
+    ]
+  }
+}

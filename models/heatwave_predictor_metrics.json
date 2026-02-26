@@ -1,0 +1,30 @@
+{
+  "version": "heatwave-forecast-v1.0",
+  "split": {
+    "train_rows": 4235,
+    "test_rows": 610
+  },
+  "horizons": {
+    "h1": {
+      "baseline_f1": 0.6134,
+      "improved_f1": 0.7778,
+      "improved_auc": 0.9704,
+      "beats_baseline": true,
+      "positive_rate_test": 0.2475
+    },
+    "h3": {
+      "baseline_f1": 0.5966,
+      "improved_f1": 0.794,
+      "improved_auc": 0.9728,
+      "beats_baseline": true,
+      "positive_rate_test": 0.2475
+    },
+    "h7": {
+      "baseline_f1": 0.5378,
+      "improved_f1": 0.7609,
+      "improved_auc": 0.9695,
+      "beats_baseline": true,
+      "positive_rate_test": 0.2475
+    }
+  }
+}

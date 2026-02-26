@@ -1,0 +1,7 @@
+upazila_code,upazila_name,district_code,district_name,risk_probability,risk_band
+BD-10-41,Patiya,BD-10,Chattogram,0.6,high
+BD-60-88,South Surma,BD-60,Sylhet,0.476,watch
+BD-27-47,Dumuria,BD-27,Khulna,0.16,low
+BD-13-18,Dhamrai,BD-13,Dhaka,0.156,low
+BD-06-06,Babuganj,BD-06,Barishal,0.076,low
+BD-69-85,Paba,BD-69,Rajshahi,0.0,low

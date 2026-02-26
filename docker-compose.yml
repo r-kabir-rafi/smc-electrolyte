@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: smc-postgis
+    environment:
+      POSTGRES_USER: smc
+      POSTGRES_PASSWORD: smc
+      POSTGRES_DB: smc_heatwave
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smc -d smc_heatwave"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: smc-backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://smc:smc@db:5432/smc_heatwave
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./pipelines:/app/pipelines
+      - ./data_raw:/app/data_raw
+      - ./data_intermediate:/app/data_intermediate
+      - ./data_processed:/app/data_processed
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: smc-frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

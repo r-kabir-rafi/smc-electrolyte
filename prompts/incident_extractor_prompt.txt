@@ -1,0 +1,21 @@
+You are extracting structured heatstroke casualty events from a news article.
+
+Return JSON only with this schema:
+{
+  "incident_id": "string",
+  "date_occurred": "YYYY-MM-DD or null",
+  "date_published": "YYYY-MM-DD or null",
+  "deaths": "integer",
+  "hospitalized": "integer",
+  "location_text_raw": "string",
+  "certainty": "confirmed|suspected",
+  "source": "string",
+  "url": "string",
+  "headline": "string"
+}
+
+Rules:
+- Use only facts present in the article text.
+- If deaths/hospitalized are missing, return 0.
+- If uncertain language appears, set certainty to suspected.
+- Keep location text exactly as mentioned.

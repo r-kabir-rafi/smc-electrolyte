@@ -1,0 +1,65 @@
+{
+  "weighting": {
+    "heatwave": 0.5,
+    "population": 0.3,
+    "mobility": 0.2
+  },
+  "top_districts": [
+    {
+      "district_name": "Chattogram",
+      "smc_priority_score": 0.5994913288013949
+    },
+    {
+      "district_name": "Dhaka",
+      "smc_priority_score": 0.5648
+    },
+    {
+      "district_name": "Khulna",
+      "smc_priority_score": 0.44390128235665727
+    },
+    {
+      "district_name": "Barishal",
+      "smc_priority_score": 0.41992441890644133
+    },
+    {
+      "district_name": "Sylhet",
+      "smc_priority_score": 0.2603447559821117
+    },
+    {
+      "district_name": "Rajshahi",
+      "smc_priority_score": 0.01228323877230704
+    }
+  ],
+  "top_upazilas": [
+    {
+      "upazila_name": "Patiya",
+      "district_name": "Chattogram",
+      "smc_priority_score": 0.6845199002299663
+    },
+    {
+      "upazila_name": "Dhamrai",
+      "district_name": "Dhaka",
+      "smc_priority_score": 0.5780000000000001
+    },
+    {
+      "upazila_name": "Dumuria",
+      "district_name": "Khulna",
+      "smc_priority_score": 0.4669869966423716
+    },
+    {
+      "upazila_name": "Babuganj",
+      "district_name": "Barishal",
+      "smc_priority_score": 0.4302101331921556
+    },
+    {
+      "upazila_name": "South Surma",
+      "district_name": "Sylhet",
+      "smc_priority_score": 0.31251618455354024
+    },
+    {
+      "upazila_name": "Paba",
+      "district_name": "Rajshahi",
+      "smc_priority_score": 0.01228323877230704
+    }
+  ]
+}
