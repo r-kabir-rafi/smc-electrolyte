@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function ScrollEffects() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const revealNodes = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -39,8 +42,7 @@ export default function ScrollEffects() {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [pathname]);
 
   return <div className="scroll-progress" aria-hidden="true" />;
 }
-

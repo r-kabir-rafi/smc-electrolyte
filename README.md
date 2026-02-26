@@ -6,16 +6,17 @@ Phase 1 scaffold for Bangladesh heatwave + health risk analytics.
 - Backend: FastAPI (Python)
 - Frontend: Next.js + Leaflet map shell
 - ETL/Pipelines: Python scripts
-- Storage: Postgres + PostGIS (Docker)
+- Storage: Postgres + PostGIS
 
 ## Quickstart
 ```bash
 make setup
 ```
 
-Alternative:
+Start services in separate terminals:
 ```bash
-docker compose up --build
+make backend-dev
+make frontend-dev
 ```
 
 Frontend: http://localhost:3000

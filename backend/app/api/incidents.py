@@ -14,11 +14,14 @@ from fastapi.responses import StreamingResponse
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
 
-INCIDENTS_GEOJSON_PATH = Path("data_processed/heatstroke_incidents.geojson")
-INCIDENTS_CSV_PATH = Path("data_processed/heatstroke_incidents.csv")
-INCIDENTS_PARQUET_PATH = Path("data_processed/heatstroke_incidents.parquet")
-DISTRICT_PATH = Path("data_processed/bd_admin_district.geojson")
-UPAZILA_PATH = Path("data_processed/bd_admin_upazila.geojson")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+DATA_PROCESSED_DIR = PROJECT_ROOT / "data_processed"
+
+INCIDENTS_GEOJSON_PATH = DATA_PROCESSED_DIR / "heatstroke_incidents.geojson"
+INCIDENTS_CSV_PATH = DATA_PROCESSED_DIR / "heatstroke_incidents.csv"
+INCIDENTS_PARQUET_PATH = DATA_PROCESSED_DIR / "heatstroke_incidents.parquet"
+DISTRICT_PATH = DATA_PROCESSED_DIR / "bd_admin_district.geojson"
+UPAZILA_PATH = DATA_PROCESSED_DIR / "bd_admin_upazila.geojson"
 
 DATE_RE = r"^\d{4}-\d{2}-\d{2}$"
 
@@ -216,7 +219,10 @@ def _load_incidents() -> list[dict[str, Any]]:
 
     raise HTTPException(
         status_code=404,
-        detail="incidents dataset not found (expected data_processed/heatstroke_incidents.geojson|csv|parquet)",
+        detail=(
+            "incidents dataset not found "
+            f"(expected {INCIDENTS_GEOJSON_PATH} | {INCIDENTS_CSV_PATH} | {INCIDENTS_PARQUET_PATH})"
+        ),
     )
 
 

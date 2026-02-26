@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
 import Link from "next/link";
 import ScrollEffects from "../components/scroll-effects";
 import "./globals.css";
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "SMC Heatwave Risk Dashboard",
@@ -21,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={manrope.className}>
+    <html lang="en">
       <body>
         <ScrollEffects />
         <header className="top-nav">

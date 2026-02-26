@@ -1,23 +1,29 @@
-.PHONY: setup up down logs test lint fmt
+.PHONY: setup dev backend-install frontend-install backend-dev frontend-dev test lint fmt
 
-setup:
-	docker compose up --build
+setup: backend-install frontend-install
 
-up:
-	docker compose up --build -d
+backend-install:
+	python3 -m venv .venv
+	. .venv/bin/activate && pip install --upgrade pip && pip install -e ./backend[dev]
 
-down:
-	docker compose down -v
+frontend-install:
+	npm --prefix frontend install
 
-logs:
-	docker compose logs -f --tail=200
+dev:
+	@echo "Run 'make backend-dev' and 'make frontend-dev' in separate terminals."
+
+backend-dev:
+	. .venv/bin/activate && uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8000 --reload
+
+frontend-dev:
+	cd frontend && npm run dev
 
 test:
-	docker compose run --rm backend pytest -q
+	. .venv/bin/activate && pytest -q backend/tests
 
 lint:
-	docker compose run --rm backend ruff check .
-	docker compose run --rm frontend npm run lint
+	. .venv/bin/activate && ruff check backend
+	cd frontend && npm run lint
 
 fmt:
-	docker compose run --rm backend ruff format .
+	. .venv/bin/activate && ruff format backend
