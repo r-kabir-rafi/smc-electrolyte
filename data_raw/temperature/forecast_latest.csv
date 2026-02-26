@@ -1,0 +1,106 @@
+district_code,district_name,forecast_date,tmax_c,tmin_c,humidity_pct,heat_index_c,risk_score,risk_category,recommended_water_liters,recommended_electrolyte_packs,recommendation
+BD-13,Dhaka,2026-02-26,28.6,19.0,63,31.6,0.357,low,2.0,0,Low risk: Normal hydration adequate
+BD-13,Dhaka,2026-02-27,29.2,18.2,57,30.6,0.375,low,2.0,0,Low risk: Normal hydration adequate
+BD-13,Dhaka,2026-02-28,29.3,17.5,63,32.0,0.402,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-13,Dhaka,2026-03-01,30.7,18.4,80,35.9,0.561,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-13,Dhaka,2026-03-02,31.1,22.0,73,34.7,0.557,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-13,Dhaka,2026-03-03,30.0,17.9,54,32.5,0.428,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-13,Dhaka,2026-03-04,29.8,17.6,58,32.8,0.428,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-10,Chittagong,2026-02-26,26.2,21.4,76,28.7,0.204,low,2.0,0,Low risk: Normal hydration adequate
+BD-10,Chittagong,2026-02-27,26.2,21.3,68,28.0,0.194,minimal,1.5,0,Minimal risk: Standard hydration
+BD-10,Chittagong,2026-02-28,24.7,20.7,81,29.1,0.126,minimal,1.5,0,Minimal risk: Standard hydration
+BD-10,Chittagong,2026-03-01,24.9,22.2,87,29.5,0.129,minimal,1.5,0,Minimal risk: Standard hydration
+BD-10,Chittagong,2026-03-02,25.3,23.6,88,29.9,0.153,minimal,1.5,0,Minimal risk: Standard hydration
+BD-10,Chittagong,2026-03-03,25.4,22.8,89,30.8,0.164,minimal,1.5,0,Minimal risk: Standard hydration
+BD-10,Chittagong,2026-03-04,26.3,20.7,82,29.5,0.22,low,2.0,0,Low risk: Normal hydration adequate
+BD-69,Rajshahi,2026-02-26,28.1,19.3,60,30.2,0.313,low,2.0,0,Low risk: Normal hydration adequate
+BD-69,Rajshahi,2026-02-27,29.6,18.1,58,31.1,0.403,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-69,Rajshahi,2026-02-28,31.3,17.0,54,32.4,0.498,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-69,Rajshahi,2026-03-01,31.8,19.2,59,33.3,0.547,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-69,Rajshahi,2026-03-02,31.5,21.1,55,32.7,0.514,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-69,Rajshahi,2026-03-03,30.3,19.3,49,31.8,0.431,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-69,Rajshahi,2026-03-04,30.2,18.7,56,32.9,0.447,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-27,Khulna,2026-02-26,30.0,16.2,68,31.9,0.453,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-27,Khulna,2026-02-27,30.8,15.7,62,31.9,0.485,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-27,Khulna,2026-02-28,31.7,16.3,72,33.8,0.581,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-27,Khulna,2026-03-01,32.2,19.9,80,36.5,0.664,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-27,Khulna,2026-03-02,33.2,20.4,75,36.4,0.709,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-27,Khulna,2026-03-03,32.2,15.8,64,33.8,0.587,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-27,Khulna,2026-03-04,32.5,14.6,61,34.8,0.607,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-06,Barisal,2026-02-26,30.1,17.6,64,31.3,0.445,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-06,Barisal,2026-02-27,31.0,18.2,56,32.2,0.485,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-06,Barisal,2026-02-28,31.5,17.6,76,34.2,0.584,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-06,Barisal,2026-03-01,32.3,19.6,78,36.0,0.659,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-06,Barisal,2026-03-02,32.3,21.6,77,35.5,0.65,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-06,Barisal,2026-03-03,32.2,20.5,70,34.9,0.617,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-06,Barisal,2026-03-04,32.4,16.8,55,33.5,0.57,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-60,Sylhet,2026-02-26,28.8,16.9,68,31.6,0.378,low,2.0,0,Low risk: Normal hydration adequate
+BD-60,Sylhet,2026-02-27,28.8,16.2,65,30.8,0.367,low,2.0,0,Low risk: Normal hydration adequate
+BD-60,Sylhet,2026-02-28,29.3,15.8,65,31.8,0.404,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-60,Sylhet,2026-03-01,29.8,17.4,72,33.8,0.465,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-60,Sylhet,2026-03-02,30.5,19.6,71,34.2,0.51,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-60,Sylhet,2026-03-03,31.2,16.8,59,33.2,0.513,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-60,Sylhet,2026-03-04,31.4,16.0,62,33.5,0.535,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-02-26,28.2,15.9,64,29.8,0.322,low,2.0,0,Low risk: Normal hydration adequate
+BD-55,Rangpur,2026-02-27,30.3,17.1,54,30.7,0.43,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-02-28,30.4,15.5,56,30.7,0.439,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-03-01,31.9,15.4,58,33.2,0.548,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-03-02,31.1,15.8,62,32.1,0.504,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-03-03,31.0,16.4,66,33.5,0.522,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-55,Rangpur,2026-03-04,32.4,17.2,63,34.9,0.608,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-34,Mymensingh,2026-02-26,27.8,18.5,67,30.6,0.307,low,2.0,0,Low risk: Normal hydration adequate
+BD-34,Mymensingh,2026-02-27,28.6,17.9,58,31.8,0.35,low,2.0,0,Low risk: Normal hydration adequate
+BD-34,Mymensingh,2026-02-28,29.0,16.4,63,32.0,0.384,low,2.0,0,Low risk: Normal hydration adequate
+BD-34,Mymensingh,2026-03-01,29.6,16.4,74,34.2,0.46,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-34,Mymensingh,2026-03-02,30.4,17.2,62,33.4,0.476,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-34,Mymensingh,2026-03-03,29.3,15.7,60,32.7,0.401,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-34,Mymensingh,2026-03-04,30.2,17.6,63,34.0,0.472,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-08,Comilla,2026-02-26,29.4,17.7,67,31.7,0.413,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-08,Comilla,2026-02-27,30.3,16.5,59,31.8,0.45,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-08,Comilla,2026-02-28,30.4,15.7,70,32.7,0.488,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-08,Comilla,2026-03-01,32.1,18.2,79,35.1,0.638,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-08,Comilla,2026-03-02,31.8,21.2,77,34.2,0.604,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-08,Comilla,2026-03-03,30.9,18.9,75,35.0,0.553,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-08,Comilla,2026-03-04,30.4,15.4,63,32.1,0.467,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-33,Gazipur,2026-02-26,28.2,19.2,65,30.7,0.33,low,2.0,0,Low risk: Normal hydration adequate
+BD-33,Gazipur,2026-02-27,28.9,19.0,59,31.0,0.364,low,2.0,0,Low risk: Normal hydration adequate
+BD-33,Gazipur,2026-02-28,29.2,17.5,64,32.8,0.404,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-33,Gazipur,2026-03-01,30.5,17.5,75,35.4,0.531,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-33,Gazipur,2026-03-02,31.0,21.4,72,35.6,0.558,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-33,Gazipur,2026-03-03,29.8,17.5,54,32.4,0.416,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-33,Gazipur,2026-03-04,29.5,17.0,61,33.2,0.419,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-35,Narayanganj,2026-02-26,29.5,18.4,60,31.0,0.4,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-35,Narayanganj,2026-02-27,30.2,18.2,54,31.4,0.43,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-35,Narayanganj,2026-02-28,30.2,16.7,63,32.6,0.46,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-35,Narayanganj,2026-03-01,31.8,18.5,77,36.6,0.632,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-35,Narayanganj,2026-03-02,32.0,21.7,72,34.8,0.61,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-35,Narayanganj,2026-03-03,31.1,18.2,50,32.2,0.476,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-35,Narayanganj,2026-03-04,30.5,16.1,55,33.1,0.464,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-02-26,29.2,16.6,60,31.1,0.384,low,2.0,0,Low risk: Normal hydration adequate
+BD-03,Bogra,2026-02-27,30.0,17.7,54,31.4,0.419,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-02-28,30.5,15.6,56,31.4,0.451,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-03-01,32.3,16.7,60,33.4,0.577,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-03-02,32.2,17.4,48,32.0,0.532,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-03-03,31.5,14.7,54,33.2,0.517,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-03,Bogra,2026-03-04,31.7,15.7,58,34.3,0.549,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-11,Cox's Bazar,2026-02-26,29.3,20.3,72,31.4,0.414,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-11,Cox's Bazar,2026-02-27,28.8,19.3,69,31.4,0.378,low,2.0,0,Low risk: Normal hydration adequate
+BD-11,Cox's Bazar,2026-02-28,27.4,18.9,78,31.8,0.303,low,2.0,0,Low risk: Normal hydration adequate
+BD-11,Cox's Bazar,2026-03-01,28.1,19.9,86,32.8,0.369,low,2.0,0,Low risk: Normal hydration adequate
+BD-11,Cox's Bazar,2026-03-02,28.0,19.5,88,32.7,0.365,low,2.0,0,Low risk: Normal hydration adequate
+BD-11,Cox's Bazar,2026-03-03,28.2,21.9,86,33.1,0.378,low,2.0,0,Low risk: Normal hydration adequate
+BD-11,Cox's Bazar,2026-03-04,28.2,20.9,83,32.7,0.371,low,2.0,0,Low risk: Normal hydration adequate
+BD-22,Jessore,2026-02-26,29.7,16.7,66,31.8,0.43,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-22,Jessore,2026-02-27,30.5,15.4,58,33.1,0.47,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-22,Jessore,2026-02-28,31.7,15.9,67,33.4,0.563,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-22,Jessore,2026-03-01,32.5,19.3,80,37.3,0.693,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-22,Jessore,2026-03-02,33.3,21.1,69,35.3,0.681,high,3.0,2,"High risk: Limit outdoor activity, frequent hydration"
+BD-22,Jessore,2026-03-03,32.2,15.8,54,33.9,0.561,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-22,Jessore,2026-03-04,32.4,15.3,58,34.6,0.591,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-17,Dinajpur,2026-02-26,27.2,16.1,70,29.0,0.264,low,2.0,0,Low risk: Normal hydration adequate
+BD-17,Dinajpur,2026-02-27,28.2,15.8,62,30.4,0.323,low,2.0,0,Low risk: Normal hydration adequate
+BD-17,Dinajpur,2026-02-28,29.6,16.2,61,31.2,0.409,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-17,Dinajpur,2026-03-01,30.2,17.0,63,32.0,0.455,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"
+BD-17,Dinajpur,2026-03-02,29.1,14.9,67,30.6,0.387,low,2.0,0,Low risk: Normal hydration adequate
+BD-17,Dinajpur,2026-03-03,29.1,15.4,64,32.3,0.394,low,2.0,0,Low risk: Normal hydration adequate
+BD-17,Dinajpur,2026-03-04,30.0,16.9,68,34.6,0.476,moderate,2.5,1,"Moderate: Regular water breaks, consider electrolytes"

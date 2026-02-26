@@ -11,10 +11,19 @@ type GeoJsonFeatureCollection = {
 
 type TimeLevel = "daily" | "weekly";
 type Intensity = "none" | "watch" | "high" | "extreme";
-type ViewMode = "historical" | "forecast" | "exposure";
+type ViewMode = "realtime" | "historical" | "forecast" | "exposure";
 type ForecastBand = "low" | "watch" | "high" | "extreme";
 type ExposureMetric = "population" | "mobility";
 type HistoricalMetric = "intensity" | "tmax";
+type RiskCategory = "extreme" | "high" | "moderate" | "low" | "minimal";
+
+const riskColors: Record<RiskCategory, string> = {
+  extreme: "#7f1d1d",
+  high: "#dc2626",
+  moderate: "#f97316",
+  low: "#facc15",
+  minimal: "#86efac",
+};
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 const BD_BOUNDS: [[number, number], [number, number]] = [[20.2, 87.5], [26.9, 93.2]];
@@ -32,8 +41,6 @@ export default function BoundaryMap() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [exposureMetric, setExposureMetric] = useState<ExposureMetric>("population");
   const [districts, setDistricts] = useState<GeoJsonFeatureCollection | null>(null);
-  const [upazilas, setUpazilas] = useState<GeoJsonFeatureCollection | null>(null);
-  const [showUpazila, setShowUpazila] = useState(false);
   const [level, setLevel] = useState<TimeLevel>("daily");
   const [dates, setDates] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -58,19 +65,21 @@ export default function BoundaryMap() {
     extreme: true,
   });
 
+  // Real-time data state
+  const [realtimeLayer, setRealtimeLayer] = useState<GeoJsonFeatureCollection | null>(null);
+  const [realtimeDates, setRealtimeDates] = useState<string[]>([]);
+  const [realtimeDate, setRealtimeDate] = useState("");
+  const [realtimeForecast, setRealtimeForecast] = useState<GeoJsonFeatureCollection | null>(null);
+  const [electrolyteSummary, setElectrolyteSummary] = useState<any>(null);
+  const [realtimeMode, setRealtimeMode] = useState<"current" | "forecast">("current");
+
   const selectedDate = dates[selectedIndex] ?? "";
 
   useEffect(() => {
     const loadStatic = async () => {
-      const [districtRes, upazilaRes] = await Promise.all([
-        fetch(`${API_BASE}/api/v1/admin/districts`),
-        fetch(`${API_BASE}/api/v1/admin/upazilas`),
-      ]);
+      const districtRes = await fetch(`${API_BASE}/api/v1/admin/districts`);
       if (districtRes.ok) {
         setDistricts((await districtRes.json()) as GeoJsonFeatureCollection);
-      }
-      if (upazilaRes.ok) {
-        setUpazilas((await upazilaRes.json()) as GeoJsonFeatureCollection);
       }
     };
     loadStatic().catch(() => null);
@@ -135,6 +144,47 @@ export default function BoundaryMap() {
     loadExposure().catch(() => null);
   }, []);
 
+  // Load realtime data
+  useEffect(() => {
+    const loadRealtime = async () => {
+      const [datesRes, currentRes, forecastRes, summaryRes] = await Promise.all([
+        fetch(`${API_BASE}/api/v1/realtime/dates`),
+        fetch(`${API_BASE}/api/v1/realtime/current`),
+        fetch(`${API_BASE}/api/v1/realtime/forecast`),
+        fetch(`${API_BASE}/api/v1/realtime/electrolyte-risk`),
+      ]);
+      if (datesRes.ok) {
+        const data = await datesRes.json();
+        setRealtimeDates(data.historical ?? []);
+        if (data.historical?.length > 0) {
+          setRealtimeDate(data.historical[data.historical.length - 1]);
+        }
+      }
+      if (currentRes.ok) {
+        setRealtimeLayer((await currentRes.json()) as GeoJsonFeatureCollection);
+      }
+      if (forecastRes.ok) {
+        setRealtimeForecast((await forecastRes.json()) as GeoJsonFeatureCollection);
+      }
+      if (summaryRes.ok) {
+        setElectrolyteSummary(await summaryRes.json());
+      }
+    };
+    loadRealtime().catch(() => null);
+  }, []);
+
+  // Load realtime choropleth for selected date
+  useEffect(() => {
+    if (viewMode !== "realtime" || realtimeMode !== "current" || !realtimeDate) return;
+    const loadRealtimeDate = async () => {
+      const res = await fetch(`${API_BASE}/api/v1/realtime/choropleth?date=${realtimeDate}`);
+      if (res.ok) {
+        setRealtimeLayer((await res.json()) as GeoJsonFeatureCollection);
+      }
+    };
+    loadRealtimeDate().catch(() => null);
+  }, [viewMode, realtimeMode, realtimeDate]);
+
   useEffect(() => {
     if (!selectedDate) {
       setLayer(null);
@@ -188,8 +238,8 @@ export default function BoundaryMap() {
 
   // Force GeoJSON layer to remount when data or view changes (react-leaflet limitation)
   const layerKey = useMemo(
-    () => `${viewMode}-${level}-${selectedDate}-${forecastDate}-${exposureMetric}`,
-    [viewMode, level, selectedDate, forecastDate, exposureMetric],
+    () => `${viewMode}-${level}-${selectedDate}-${forecastDate}-${exposureMetric}-${realtimeDate}-${realtimeMode}`,
+    [viewMode, level, selectedDate, forecastDate, exposureMetric, realtimeDate, realtimeMode],
   );
 
   const exposureColor = (value: number, metric: ExposureMetric): string => {
@@ -209,6 +259,13 @@ export default function BoundaryMap() {
   };
 
   const filteredLayer = useMemo(() => {
+    if (viewMode === "realtime") {
+      if (realtimeMode === "forecast") {
+        return realtimeForecast;
+      }
+      return realtimeLayer;
+    }
+
     if (viewMode === "exposure") {
       return exposureMetric === "population" ? populationLayer : mobilityLayer;
     }
@@ -282,13 +339,38 @@ export default function BoundaryMap() {
         <label>
           Mode{" "}
           <select value={viewMode} onChange={(e) => setViewMode(e.target.value as ViewMode)}>
+            <option value="realtime">Real-time (Electrolyte Risk)</option>
             <option value="historical">Historical</option>
             <option value="forecast">Forecast (next 7 days)</option>
             <option value="exposure">Exposure</option>
           </select>
         </label>
 
-        {viewMode !== "exposure" && (
+        {viewMode === "realtime" && (
+          <label>
+            View{" "}
+            <select value={realtimeMode} onChange={(e) => setRealtimeMode(e.target.value as "current" | "forecast")}>
+              <option value="current">Current/Historical</option>
+              <option value="forecast">7-Day Forecast</option>
+            </select>
+          </label>
+        )}
+
+        {viewMode === "realtime" && realtimeMode === "current" && realtimeDates.length > 0 && (
+          <label style={{ minWidth: "200px" }}>
+            Date: <strong>{realtimeDate || "N/A"}</strong>
+            <input
+              type="range"
+              min={0}
+              max={realtimeDates.length - 1}
+              value={Math.max(0, realtimeDates.indexOf(realtimeDate))}
+              onChange={(e) => setRealtimeDate(realtimeDates[Number(e.target.value)] ?? "")}
+              style={{ width: "100%", display: "block" }}
+            />
+          </label>
+        )}
+
+        {viewMode !== "exposure" && viewMode !== "realtime" && (
           <label>
             Time level{" "}
             <select value={level} onChange={(e) => setLevel(e.target.value as TimeLevel)}>
@@ -349,11 +431,6 @@ export default function BoundaryMap() {
             />
           </label>
         )}
-
-        <label style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}>
-          <input type="checkbox" checked={showUpazila} onChange={() => setShowUpazila((v) => !v)} />
-          Show upazila outlines
-        </label>
 
         {viewMode !== "exposure" && (
           <button
@@ -457,7 +534,21 @@ export default function BoundaryMap() {
               onEachFeature={(feature, leafletLayer) => {
                 const p = feature?.properties ?? {};
                 let label = "";
-                if (viewMode === "historical") {
+                if (viewMode === "realtime") {
+                  const name = p.district_name ?? "Unknown";
+                  const tmax = p.tmax_c !== undefined ? `${Number(p.tmax_c).toFixed(1)}°C` : "N/A";
+                  const hi = p.heat_index_c !== undefined ? `${Number(p.heat_index_c).toFixed(1)}°C` : "N/A";
+                  const humidity = p.humidity_pct !== undefined ? `${Number(p.humidity_pct).toFixed(0)}%` : "N/A";
+                  const risk = p.risk_category ?? "N/A";
+                  const score = p.risk_score !== undefined ? `${(Number(p.risk_score) * 100).toFixed(0)}%` : "N/A";
+                  const water = p.recommended_water_liters ?? "N/A";
+                  const packs = p.recommended_electrolyte_packs ?? 0;
+                  label = `<b>${name}</b><br/>
+                    <span style="color:#dc2626">Temp: ${tmax}</span> · Heat Index: ${hi}<br/>
+                    Humidity: ${humidity}<br/>
+                    <b style="color:${riskColors[risk as RiskCategory] ?? '#666'}">Risk: ${risk} (${score})</b><br/>
+                    💧 Water: ${water}L · ⚡ Electrolyte: ${packs} packs`;
+                } else if (viewMode === "historical") {
                   const name = p.district_name ?? p.district_name_x ?? "Unknown";
                   const tmax = p.tmax_c !== undefined ? `${Number(p.tmax_c).toFixed(1)}°C` : "N/A";
                   const cat = p.intensity_category ?? "N/A";
@@ -480,6 +571,15 @@ export default function BoundaryMap() {
                 leafletLayer.bindTooltip(label, { sticky: true });
               }}
               style={(feature) => {
+                if (viewMode === "realtime") {
+                  const riskCat = (feature?.properties?.risk_category ?? "minimal") as RiskCategory;
+                  return {
+                    color: "#1f2937",
+                    weight: 1.4,
+                    fillColor: riskColors[riskCat] ?? "#86efac",
+                    fillOpacity: 0.75,
+                  };
+                }
                 if (viewMode === "exposure") {
                   const p = feature?.properties ?? {};
                   const value =
@@ -528,12 +628,6 @@ export default function BoundaryMap() {
               }}
             />
           )}
-          {showUpazila && upazilas && (
-            <GeoJSON
-              data={upazilas as any}
-              style={{ color: "#0f766e", weight: 0.7, fillOpacity: 0 }}
-            />
-          )}
         </MapContainer>
       </div>
       {/* Legend */}
@@ -577,6 +671,13 @@ export default function BoundaryMap() {
               {l}
             </span>
           ))}
+        {viewMode === "realtime" &&
+          (["minimal", "low", "moderate", "high", "extreme"] as RiskCategory[]).map((cat) => (
+            <span key={cat} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+              <span style={{ width: 14, height: 14, background: riskColors[cat], border: "1px solid #9ca3af", borderRadius: 2, display: "inline-block" }} />
+              {cat}
+            </span>
+          ))}
         <span style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginLeft: "0.5rem" }}>
           <span style={{ width: 20, height: 0, borderTop: "2.5px solid #0f172a", display: "inline-block" }} />
           District
@@ -599,6 +700,75 @@ export default function BoundaryMap() {
         <div style={{ marginTop: "0.75rem", fontSize: "0.9rem" }}>
           <strong>Top movement-intensity districts:</strong>{" "}
           {mobilityRanking.slice(0, 5).map((r) => `${r.district_name} (#${r.movement_rank})`).join(", ")}
+        </div>
+      )}
+
+      {/* Electrolyte Risk Summary Panel */}
+      {viewMode === "realtime" && electrolyteSummary && (
+        <div style={{
+          marginTop: "1rem",
+          padding: "1rem",
+          background: "linear-gradient(135deg, #fef2f2 0%, #fff7ed 100%)",
+          borderRadius: "0.75rem",
+          border: "1px solid #fecaca",
+        }}>
+          <h3 style={{ margin: "0 0 0.75rem 0", fontSize: "1.1rem", color: "#7f1d1d" }}>
+            ⚡ Electrolyte Risk Summary — {electrolyteSummary.as_of_date}
+          </h3>
+          <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontSize: "0.75rem", color: "#92400e", fontWeight: 600, textTransform: "uppercase" }}>Districts at Risk</div>
+              <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.3rem" }}>
+                {electrolyteSummary.risk_distribution?.extreme > 0 && (
+                  <span style={{ background: "#7f1d1d", color: "#fff", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.85rem" }}>
+                    {electrolyteSummary.risk_distribution.extreme} Extreme
+                  </span>
+                )}
+                {electrolyteSummary.risk_distribution?.high > 0 && (
+                  <span style={{ background: "#dc2626", color: "#fff", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.85rem" }}>
+                    {electrolyteSummary.risk_distribution.high} High
+                  </span>
+                )}
+                {electrolyteSummary.risk_distribution?.moderate > 0 && (
+                  <span style={{ background: "#f97316", color: "#fff", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.85rem" }}>
+                    {electrolyteSummary.risk_distribution.moderate} Moderate
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: "0.75rem", color: "#92400e", fontWeight: 600, textTransform: "uppercase" }}>Avg Hydration Need</div>
+              <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#0f172a" }}>
+                💧 {electrolyteSummary.estimated_water_liters_per_person?.toFixed(1)}L water
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: "0.75rem", color: "#92400e", fontWeight: 600, textTransform: "uppercase" }}>Electrolyte Packs</div>
+              <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#0f172a" }}>
+                ⚡ {electrolyteSummary.estimated_electrolyte_packs_per_person?.toFixed(1)} packs/person
+              </div>
+            </div>
+          </div>
+          {electrolyteSummary.top_risk_districts?.length > 0 && (
+            <div style={{ marginTop: "0.75rem" }}>
+              <div style={{ fontSize: "0.75rem", color: "#92400e", fontWeight: 600, textTransform: "uppercase", marginBottom: "0.3rem" }}>
+                Top Risk Districts
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                {electrolyteSummary.top_risk_districts.slice(0, 5).map((d: any, i: number) => (
+                  <span key={i} style={{
+                    background: riskColors[d.risk_category as RiskCategory] ?? "#888",
+                    color: "#fff",
+                    padding: "0.25rem 0.6rem",
+                    borderRadius: "999px",
+                    fontSize: "0.8rem",
+                  }}>
+                    {d.district}: {d.tmax_c?.toFixed(1)}°C ({d.risk_category})
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

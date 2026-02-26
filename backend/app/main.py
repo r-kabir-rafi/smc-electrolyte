@@ -8,6 +8,7 @@ from app.api.forecast import router as forecast_router
 from app.api.health import router as health_router
 from app.api.heatwave import router as heatwave_router
 from app.api.incidents import router as incidents_router
+from app.api.realtime import router as realtime_router
 from app.api.smc import router as smc_router
 from app.core.config import settings
 
@@ -30,6 +31,7 @@ app.include_router(forecast_router, prefix="/api/v1")
 app.include_router(exposure_router, prefix="/api/v1")
 app.include_router(smc_router, prefix="/api/v1")
 app.include_router(incidents_router, prefix="/api/v1")
+app.include_router(realtime_router, prefix="/api/v1")
 
 
 @app.get("/")
