@@ -1,20 +1,19 @@
-import Link from "next/link";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
     <header className={styles.nav}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.brand}>
+        <a href="/" className={styles.brand}>
           Heatwave Monitor
-        </Link>
+        </a>
         <nav className={styles.links}>
-          <Link href="/" className={styles.link}>
+          <a href="/" className={styles.link}>
             Home
-          </Link>
-          <Link href="/incidents" className={styles.link}>
+          </a>
+          <a href="/incidents" className={styles.link}>
             Incidents
-          </Link>
+          </a>
         </nav>
       </div>
     </header>

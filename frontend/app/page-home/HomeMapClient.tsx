@@ -1,7 +1,6 @@
 "use client";
 
 import L from "leaflet";
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
 import { loadIncidentsCsv, type IncidentRecord } from "../../lib/data";
@@ -162,6 +161,12 @@ export default function HomeMapClient() {
   const onEachFeature = (feature: { properties?: Record<string, string> }, layer: L.Layer) => {
     const name = districtName(feature.properties);
     layer.bindTooltip(name, { sticky: true });
+    layer.on("add", () => {
+      const path = (layer as L.Path).getElement?.();
+      if (path) {
+        path.setAttribute("tabindex", "-1");
+      }
+    });
 
     layer.on({
       mouseover: (event) => {
@@ -229,15 +234,12 @@ export default function HomeMapClient() {
           </dl>
 
           {selectedDistrict && (
-            <Link
-              href={{
-                pathname: "/incidents",
-                query: { district: selectedDistrict },
-              }}
+            <a
+              href={`/incidents?district=${encodeURIComponent(selectedDistrict)}`}
               className={styles.districtLink}
             >
               View incidents in this district
-            </Link>
+            </a>
           )}
 
           <p className={styles.hintText}>Hover polygons to see district tooltips.</p>

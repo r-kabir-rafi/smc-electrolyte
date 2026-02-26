@@ -205,7 +205,9 @@ export default function IncidentMap() {
                 <br />
                 Reporting: {incident.reporting_date || "-"}
                 <br />
-                Casualties: {incident.casualties}
+                Dead: {incident.dead} | Sick: {incident.sick}
+                <br />
+                Total: {incident.casualties}
                 <br />
                 {incident.place || "-"}
               </Tooltip>

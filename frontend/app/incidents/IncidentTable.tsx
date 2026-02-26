@@ -223,7 +223,7 @@ export default function IncidentTable() {
               </th>
               <th>
                 <button type="button" className={styles.sortButton} onClick={() => setSort("casualties")}>
-                  Casualties{sortIndicator(sortKey === "casualties", sortDirection)}
+                  Dead / Sick{sortIndicator(sortKey === "casualties", sortDirection)}
                 </button>
               </th>
               <th>Place</th>
@@ -246,7 +246,7 @@ export default function IncidentTable() {
                   <td>{row.reporting_date || "-"}</td>
                   <td>{row.incident_date || "-"}</td>
                   <td>{row.district || "-"}</td>
-                  <td>{row.casualties}</td>
+                  <td>{row.dead} / {row.sick}</td>
                   <td>{row.place || "-"}</td>
                   <td className={styles.description}>{row.description || "-"}</td>
                   <td>
