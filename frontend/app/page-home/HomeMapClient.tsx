@@ -53,6 +53,18 @@ function FitToDistrictBounds({ bounds }: { bounds?: L.LatLngBounds }) {
   return null;
 }
 
+function CleanupMapOnUnmount() {
+  const map = useMap();
+
+  useEffect(() => {
+    return () => {
+      map.remove();
+    };
+  }, [map]);
+
+  return null;
+}
+
 function buildDistrictStats(rows: IncidentRecord[]): Map<string, DistrictStats> {
   const stats = new Map<string, DistrictStats>();
 
@@ -196,6 +208,7 @@ export default function HomeMapClient() {
             style={{ height: "100%", width: "100%" }}
             bounds={mapBounds}
           >
+            <CleanupMapOnUnmount />
             <FitToDistrictBounds bounds={mapBounds} />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
