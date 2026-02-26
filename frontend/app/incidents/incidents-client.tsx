@@ -15,7 +15,44 @@ type Incident = {
   source_url: string | null;
   headline: string | null;
   place: string | null;
+  district_code: string | null;
 };
+
+// District code to name mapping
+const DISTRICT_NAMES: Record<string, string> = {
+  "BD-01": "Bandarban",
+  "BD-10": "Chittagong",
+  "BD-12": "Chuadanga",
+  "BD-13": "Dhaka",
+  "BD-18": "Gazipur",
+  "BD-20": "Habiganj",
+  "BD-22": "Jashore",
+  "BD-23": "Jhenaidah",
+  "BD-27": "Khulna",
+  "BD-29": "Lalmonirhat",
+  "BD-36": "Madaripur",
+  "BD-39": "Meherpur",
+  "BD-44": "Natore",
+  "BD-46": "Nilphamari",
+  "BD-48": "Naogaon",
+  "BD-53": "Rajbari",
+  "BD-54": "Pabna",
+  "BD-59": "Sirajganj",
+  "BD-69": "Rajshahi",
+};
+
+function getDistrictName(item: Incident): string {
+  // Priority: district field, then mapping from district_code, then parse place
+  if (item.district) return item.district;
+  if (item.district_code && DISTRICT_NAMES[item.district_code]) {
+    return DISTRICT_NAMES[item.district_code];
+  }
+  // Fallback: extract district from place (format: "Upazila, District")
+  if (item.place && item.place.includes(",")) {
+    return item.place.split(",").pop()?.trim() || item.place;
+  }
+  return item.place || "N/A";
+}
 
 type IncidentResponse = {
   items: Incident[];
@@ -194,7 +231,7 @@ export default function IncidentsClient() {
             <tr>
               <th>#</th>
               <th>Date</th>
-              <th>District / Upazila</th>
+              <th>District</th>
               <th>Deaths</th>
               <th>Injured</th>
               <th>Source</th>
@@ -206,7 +243,7 @@ export default function IncidentsClient() {
             {items.map((item, idx) => {
               const serial = showAll ? idx + 1 : (page - 1) * pageSize + idx + 1;
               const eventDate = item.date_occurred || item.date_published || "N/A";
-              const place = item.upazila ? `${item.district}, ${item.upazila}` : item.district || item.place || "N/A";
+              const place = getDistrictName(item);
               return (
                 <tr
                   key={item.id}
@@ -265,7 +302,7 @@ export default function IncidentsClient() {
         {items.map((item, idx) => {
           const serial = showAll ? idx + 1 : (page - 1) * pageSize + idx + 1;
           const eventDate = item.date_occurred || item.date_published || "N/A";
-          const place = item.upazila ? `${item.district}, ${item.upazila}` : item.district || item.place || "N/A";
+          const place = getDistrictName(item);
           return (
             <article key={item.id} className="incident-card">
               <div className="incident-card-top">
