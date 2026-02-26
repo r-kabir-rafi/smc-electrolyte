@@ -1,8 +1,10 @@
 "use client";
 
 import L from "leaflet";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
+import { loadIncidentsCsv, type IncidentRecord } from "../../lib/data";
 import styles from "./home.module.css";
 
 type DistrictFeatureCollection = {
@@ -14,13 +16,31 @@ type DistrictFeatureCollection = {
   }>;
 };
 
+type DistrictStats = {
+  incidentCount: number;
+  totalCasualties: number;
+  latestReportingDate: string;
+};
+
+const DISTRICT_ALIAS: Record<string, string> = {
+  barisal: "barishal",
+  bogra: "bogura",
+  chittagong: "chattogram",
+  comilla: "cumilla",
+  jessore: "jashore",
+};
+
+function normalizeDistrictName(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function canonicalDistrictName(value: string): string {
+  const normalized = normalizeDistrictName(value);
+  return DISTRICT_ALIAS[normalized] || normalized;
+}
+
 function districtName(properties?: Record<string, string>): string {
-  return (
-    properties?.NAME_2 ||
-    properties?.district ||
-    properties?.name ||
-    "Unknown District"
-  );
+  return properties?.NAME_2 || properties?.district || properties?.name || "Unknown District";
 }
 
 function FitToDistrictBounds({ bounds }: { bounds?: L.LatLngBounds }) {
@@ -34,9 +54,36 @@ function FitToDistrictBounds({ bounds }: { bounds?: L.LatLngBounds }) {
   return null;
 }
 
+function buildDistrictStats(rows: IncidentRecord[]): Map<string, DistrictStats> {
+  const stats = new Map<string, DistrictStats>();
+
+  for (const row of rows) {
+    const key = canonicalDistrictName(row.district || "");
+    if (!key) continue;
+
+    const existing = stats.get(key) || {
+      incidentCount: 0,
+      totalCasualties: 0,
+      latestReportingDate: "",
+    };
+
+    existing.incidentCount += 1;
+    existing.totalCasualties += row.casualties || 0;
+
+    if (row.reporting_date && (!existing.latestReportingDate || row.reporting_date > existing.latestReportingDate)) {
+      existing.latestReportingDate = row.reporting_date;
+    }
+
+    stats.set(key, existing);
+  }
+
+  return stats;
+}
+
 export default function HomeMapClient() {
   const [districts, setDistricts] = useState<DistrictFeatureCollection | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("None selected");
+  const [incidents, setIncidents] = useState<IncidentRecord[]>([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const geoJsonRef = useRef<L.GeoJSON | null>(null);
@@ -44,12 +91,18 @@ export default function HomeMapClient() {
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch("/data/bd_districts.geojson", { cache: "force-cache" });
-        if (!response.ok) {
-          throw new Error(`Failed to load district boundaries (${response.status})`);
+        const [districtResponse, incidentRows] = await Promise.all([
+          fetch("/data/bd_districts.geojson", { cache: "force-cache" }),
+          loadIncidentsCsv(),
+        ]);
+
+        if (!districtResponse.ok) {
+          throw new Error(`Failed to load district boundaries (${districtResponse.status})`);
         }
-        const data = (await response.json()) as DistrictFeatureCollection;
+
+        const data = (await districtResponse.json()) as DistrictFeatureCollection;
         setDistricts(data);
+        setIncidents(incidentRows);
         setError("");
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Failed to load map data.");
@@ -67,6 +120,34 @@ export default function HomeMapClient() {
     const bounds = layer.getBounds();
     return bounds.isValid() ? bounds : undefined;
   }, [districts]);
+
+  const districtStats = useMemo(() => buildDistrictStats(incidents), [incidents]);
+
+  const selectedStats = useMemo(() => {
+    if (!selectedDistrict) {
+      return {
+        incidentCount: 0,
+        totalCasualties: 0,
+        latestReportingDate: "-",
+      };
+    }
+
+    const key = canonicalDistrictName(selectedDistrict);
+    const stats = districtStats.get(key);
+    if (!stats) {
+      return {
+        incidentCount: 0,
+        totalCasualties: 0,
+        latestReportingDate: "-",
+      };
+    }
+
+    return {
+      incidentCount: stats.incidentCount,
+      totalCasualties: stats.totalCasualties,
+      latestReportingDate: stats.latestReportingDate || "-",
+    };
+  }, [districtStats, selectedDistrict]);
 
   const defaultStyle = useMemo(
     () => ({
@@ -130,10 +211,36 @@ export default function HomeMapClient() {
 
         <aside className={styles.sidePanel}>
           <h2 className={styles.sideTitle}>Selected District</h2>
-          <p className={styles.sideText}>{selectedDistrict}</p>
-          <p className={styles.sideText} style={{ marginTop: "0.75rem", color: "#475569" }}>
-            Hover polygons to see district tooltips.
-          </p>
+          <p className={styles.sideText}>{selectedDistrict || "None selected"}</p>
+
+          <dl className={styles.statsList}>
+            <div className={styles.statsRow}>
+              <dt>Incident count</dt>
+              <dd>{selectedStats.incidentCount}</dd>
+            </div>
+            <div className={styles.statsRow}>
+              <dt>Total casualties</dt>
+              <dd>{selectedStats.totalCasualties}</dd>
+            </div>
+            <div className={styles.statsRow}>
+              <dt>Latest reporting date</dt>
+              <dd>{selectedStats.latestReportingDate}</dd>
+            </div>
+          </dl>
+
+          {selectedDistrict && (
+            <Link
+              href={{
+                pathname: "/incidents",
+                query: { district: selectedDistrict },
+              }}
+              className={styles.districtLink}
+            >
+              View incidents in this district
+            </Link>
+          )}
+
+          <p className={styles.hintText}>Hover polygons to see district tooltips.</p>
         </aside>
       </div>
 

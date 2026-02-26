@@ -2,24 +2,24 @@ id,reporting_date,incident_date,district,casualties,place,description,source_nam
 aa71ae1ee0c6a1f0,2024-04-20,2024-04-20,Pabna,1,"Shalgaria, Pabna",Heatstroke death in Pabna during heatwave,bdnews24,https://bdnews24.com/bangladesh/827o4pspaj
 716c64268f12bb0c,2024-04-20,2024-04-20,Gazipur,1,"Konabari, Gazipur",Heatstroke death in Gazipur during heatwave,bdnews24,https://bdnews24.com/bangladesh/827o4pspaj
 0ba339aa98db2d61,2024-04-23,2024-04-22,Dhaka,1,"Wari, Dhaka",One dies of heatstroke in Dhaka,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/dhaka/344672/one-dies-of-heatstroke-in-dhaka
-75da5ca71d987340,2024-04-22,2024-04-22,Chuadanga,1,Chuadanga,Heatstroke death in Chuadanga,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-5cad216218d6546c,2024-04-22,2024-04-22,Khulna,1,Khulna,Heatstroke death in Khulna,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-dbecd1b8f3851abe,2024-04-22,2024-04-22,Habiganj,1,Habiganj,Heatstroke death in Habiganj,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-cc251e55649a6128,2024-04-22,2024-04-22,Rajbari,1,Rajbari,Heatstroke death in Rajbari,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-311a47bea115af8a,2024-04-22,2024-04-22,Jhenaidah,1,Jhenaidah,Heatstroke death in Jhenaidah,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-7a2e6653e5349667,2024-04-22,2024-04-22,Lalmonirhat,1,Lalmonirhat,Heatstroke death in Lalmonirhat,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-c0440fafc7961548,2024-04-22,2024-04-22,Bandarban,6,Bandarban,Heatstroke death and hospitalizations in Bandarban,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
-40d2bc23ab1d910d,2024-04-23,2024-04-22,Dhaka,1,"Shahbagh, Dhaka",Rickshaw-puller dies from heatstroke in Dhaka,bdnews24,https://bdnews24.com/bangladesh/pdui2g8xar
+75da5ca71d987340,2024-04-30,2024-04-22,Chuadanga,1,Chuadanga,DGHS control room data reported one heatstroke death in Chuadanga between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+5cad216218d6546c,2024-04-30,2024-04-22,Khulna,1,Khulna,DGHS control room data reported one heatstroke death in Khulna between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+dbecd1b8f3851abe,2024-04-30,2024-04-22,Habiganj,1,Habiganj,DGHS control room data reported one heatstroke death in Habiganj between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+cc251e55649a6128,2024-04-30,2024-04-22,Rajbari,1,Rajbari,DGHS control room data reported one heatstroke death in Rajbari between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+311a47bea115af8a,2024-04-30,2024-04-22,Jhenaidah,1,Jhenaidah,DGHS control room data reported one heatstroke death in Jhenaidah between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+7a2e6653e5349667,2024-04-30,2024-04-22,Lalmonirhat,1,Lalmonirhat,DGHS control room data reported one heatstroke death in Lalmonirhat between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+c0440fafc7961548,2024-04-30,2024-04-22,Bandarban,1,Bandarban,DGHS control room data reported one heatstroke death in Bandarban between 22-28 April.,Prothom Alo,https://en.prothomalo.com/bangladesh/b37g9l5a3o
+40d2bc23ab1d910d,2024-04-23,2024-04-22,Dhaka,1,"Shahbagh, Dhaka",Rickshaw-puller dies from suspected heatstroke in Dhaka.,bdnews24,https://bdnews24.com/bangladesh/pdui2g8xar
 97be51f8f77f1230,2024-04-22,2024-04-22,Rajshahi,1,"Bagmara, Rajshahi",Farmer dies of heatstroke in Rajshahi,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/nation/344627/heatwave-farmer-dies-from-heatstroke-in-rajshahi
 7d8a0d8079c4c5fc,2024-04-22,2024-04-22,Chattogram,1,Chittagong,Youth dies of heatstroke in Chittagong,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/nation/344631/25-year-old-dies-of-heatstroke-in-chittagong
 2c3029b2bf98e9e8,2024-04-21,2024-04-21,Meherpur,1,"Gangni, Meherpur",Woman dies in Meherpur during heatwave,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/nation/344493/woman-dies-in-meherpur-as-heat-wave-scorches
 8f6b8f515600c2d3,2024-04-28,2024-04-27,Naogaon,1,"Niamatpur, Naogaon",Madrasa teacher dies from extreme heat in Naogaon,bdnews24,https://bdnews24.com/bangladesh/5a2dc3d13686
-28b0fbd3e0b76b2f,2024-04-28,2024-04-28,Chattogram,1,"Boalkhali, Chittagong",Teacher dies of heat stroke in Chittagong,New Age,https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore
-d1f979d50eb7794a,2024-04-28,2024-04-28,Jashore,1,"Sadar, Jashore",Teacher dies of heat stroke in Jashore,New Age,https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore
-fe7985615518ff13,2024-04-28,2024-04-28,Dhaka,1,"Gulistan, Dhaka",Community policeman dies of heatstroke in Gulistan,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/dhaka/345153/death-of-community-policeman-in-gulistan
-4811e8cd658b281d,2024-04-30,2024-04-29,Madaripur,2,Madaripur,Two die from heatstroke in Madaripur,bdnews24,https://bdnews24.com/bangladesh/f896dacdca6d
-68d98a3f766e3209,2024-04-30,2024-04-29,Chattogram,1,Chittagong,One dies from heatstroke in Chittagong,bdnews24,https://bdnews24.com/bangladesh/f896dacdca6d
-c470a4d62808ed00,2024-04-30,2024-04-30,Nilphamari,4,Nilphamari,Four die from heatstroke in Nilphamari,Prothom Alo,https://en.prothomalo.com/bangladesh/local-news/7lihebe50k
-bdce1e45e39b052f,2024-04-30,2024-04-30,Natore,1,Natore,One dies from heatstroke in Natore,Prothom Alo,https://en.prothomalo.com/bangladesh/local-news/7lihebe50k
+28b0fbd3e0b76b2f,2024-04-28,2024-04-28,Chattogram,1,"Boalkhali, Chittagong",Teacher died of suspected heat stroke in Chittagong.,New Age,https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore
+d1f979d50eb7794a,2024-04-28,2024-04-28,Jashore,1,"Sadar, Jashore",Teacher died of suspected heat stroke in Jashore.,New Age,https://www.newagebd.net/post/environment-climate-change/233825/two-teachers-die-of-suspected-heat-stroke-in-ctg-jashore
+fe7985615518ff13,2024-04-28,2024-04-28,Dhaka,1,"Gulistan, Dhaka","Community policeman dies of suspected heatstroke in Gulistan, Dhaka.",Dhaka Tribune,https://www.dhakatribune.com/bangladesh/dhaka/345153/death-of-community-policeman-in-gulistan
+4811e8cd658b281d,2024-04-30,2024-04-29,Madaripur,2,Madaripur,DGHS reported two heatstroke deaths in Madaripur in the Apr 22-29 control room tally.,bdnews24,https://bdnews24.com/bangladesh/f896dacdca6d
+68d98a3f766e3209,2024-04-30,2024-04-29,Chattogram,1,Chittagong,DGHS reported one heatstroke death in Chittagong in the Apr 22-29 control room tally.,bdnews24,https://bdnews24.com/bangladesh/f896dacdca6d
+c470a4d62808ed00,2024-04-30,2024-04-30,Nilphamari,4,Nilphamari,Reports said four people died from possible heat stroke in different parts of Nilphamari.,Prothom Alo,https://en.prothomalo.com/bangladesh/local-news/7lihebe50k
+bdce1e45e39b052f,2024-04-30,2024-04-30,Natore,1,Natore,Reports said one person died from possible heat stroke in Natore amid the heatwave.,Prothom Alo,https://en.prothomalo.com/bangladesh/local-news/7lihebe50k
 9396a7fc2d882d77,2024-05-16,2024-05-16,Sirajganj,2,"Ullapara, Sirajganj",Two die from heatstroke in Sirajganj while harvesting,Dhaka Tribune,https://www.dhakatribune.com/bangladesh/nation/346648/two-die-from-heatstroke-in-sirajganj
-698bde1504fefe3e,2023-06-14,2023-06-13,Khulna,6,"Dumuria, Khulna",School student dies of heat stroke in Khulna,New Age,https://www.newagebd.net/article/204191
+698bde1504fefe3e,2023-06-14,2023-06-13,Khulna,6,"Dumuria, Khulna",School student dies of heat stroke in Khulna; five others fall sick.,New Age,https://www.newagebd.net/article/204191/school-student-dies-of-heat-stroke-five-others-fall-sick-in-khulna

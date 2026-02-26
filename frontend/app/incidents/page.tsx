@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import IncidentTable from "./IncidentTable";
 import styles from "./incidents.module.css";
 
@@ -14,7 +15,9 @@ export default function IncidentsPage() {
         Filterable and sortable incident list sourced from CSV in <code>/public/data</code>.
       </p>
       <IncidentMap />
-      <IncidentTable />
+      <Suspense fallback={<p className={styles.subtitle}>Loading incidents...</p>}>
+        <IncidentTable />
+      </Suspense>
     </main>
   );
 }

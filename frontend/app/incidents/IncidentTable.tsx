@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { exportIncidentsCsv, loadIncidentsCsv, type IncidentRecord } from "../../lib/data";
 import styles from "./incidents.module.css";
@@ -18,6 +19,8 @@ function sortIndicator(active: boolean, direction: SortDirection): string {
 }
 
 export default function IncidentTable() {
+  const searchParams = useSearchParams();
+
   const [rows, setRows] = useState<IncidentRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -32,6 +35,11 @@ export default function IncidentTable() {
 
   const [pageSize, setPageSize] = useState(25);
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const districtFromQuery = searchParams.get("district")?.trim() || "";
+    setDistrict(districtFromQuery);
+  }, [searchParams]);
 
   useEffect(() => {
     const load = async () => {
