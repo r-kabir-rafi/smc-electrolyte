@@ -12,7 +12,13 @@ import {
   ReferenceLine,
   Legend,
 } from "recharts";
+import dynamic from "next/dynamic";
 import styles from "./history.module.css";
+
+const HistoryMap = dynamic(() => import("../../components/HistoryMap"), {
+  ssr: false,
+  loading: () => <div className={styles.mapLoading}>Loading Map Engine...</div>
+});
 
 // Basic district information
 type DistrictPoint = { id: string; label: string; lat: number; lon: number };
@@ -166,6 +172,7 @@ export default function HistoryClient() {
   const [districts, setDistricts] = useState<DistrictPoint[]>([]);
   const [selectedDistrictId, setSelectedDistrictId] = useState<string>("");
   const [dataMode, setDataMode] = useState<"daily" | "monthly">("monthly");
+  const [mapMode, setMapMode] = useState<"temperature" | "humidity" | "wind">("temperature");
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -422,6 +429,33 @@ export default function HistoryClient() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Dynamic Country Map */}
+        <div className={styles.panel}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 className={styles.panelTitle} style={{ margin: 0 }}>Interactive History Map</h2>
+            <div className={styles.toggleGroup} style={{ width: 'auto' }}>
+              <button
+                className={`${styles.toggleBtn} ${mapMode === "temperature" ? styles.toggleBtnActive : ""}`}
+                onClick={() => setMapMode("temperature")}
+              >Temp</button>
+              <button
+                className={`${styles.toggleBtn} ${mapMode === "humidity" ? styles.toggleBtnActive : ""}`}
+                onClick={() => setMapMode("humidity")}
+              >Humidity</button>
+              <button
+                className={`${styles.toggleBtn} ${mapMode === "wind" ? styles.toggleBtnActive : ""}`}
+                onClick={() => setMapMode("wind")}
+              >Wind</button>
+            </div>
+          </div>
+          {currentSnapshot && (
+            <HistoryMap 
+              currentDate={dataMode === "monthly" ? currentSnapshot.time + "-01" : currentSnapshot.time}
+              activeMode={mapMode}
+            />
+          )}
         </div>
 
         {/* Charts */}
