@@ -47,5 +47,6 @@ npm run dev -- -p 3000
 ## Data Sources
 - GADM download page: https://gadm.org/download_country.html
 - GADM direct file used: https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_BGD_2.json.zip
+- Weather history is fetched from [Open-Meteo Historical Weather API](https://open-meteo.com/en/docs/historical-weather-api) (ERA5/ERA5-Land reanalysis-based).
 
 District boundaries from GADM (Global Administrative Areas). License: free for non-commercial use; for commercial use obtain license from gadm.org.

@@ -1,18 +1,24 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import styles from "./history.module.css";
 
 const HistoryClient = dynamic(() => import("./HistoryClient"), {
   ssr: false,
-  loading: () => <div className={styles.mapPlaceholder}>Loading history tools...</div>,
+  loading: () => <div className={styles.placeholder}>Loading weather history dashboard...</div>,
 });
+
+export const metadata: Metadata = {
+  title: "Weather History | Bangladesh Heatwave Monitor",
+  description: "Historical weather data timeline and charts for Bangladesh districts since 2010.",
+};
 
 export default function HistoryPage() {
   return (
     <main className={styles.page}>
-      <h1 className={styles.title}>Temperature & Humidity History (Last 10 Years)</h1>
+      <h1 className={styles.title}>Weather History (2010 - Today)</h1>
       <p className={styles.subtitle}>
-        Reanalysis-based daily weather history from Open-Meteo (ERA5/Copernicus), aggregated as the average across
-        all mapped Bangladesh districts for long-term trend analysis.
+        Historical daily weather data for Bangladesh districts, 
+        powered by the Open-Meteo API (ERA5). Use the timeline to explore past weather.
       </p>
       <HistoryClient />
     </main>
