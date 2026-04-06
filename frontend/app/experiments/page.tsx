@@ -18,22 +18,7 @@ export default function ExperimentsPage() {
       </div>
 
       <div className="dashboard-grid">
-        <div className="grid-span-6">
-          <Card variant="elevated">
-            <CardHeader>
-              <CardHeaderMeta>
-                <CardTitle>Population Density</CardTitle>
-                <CardCaption>Explore the new 3D district spike surface built from Bangladesh 2022 census density.</CardCaption>
-              </CardHeaderMeta>
-            </CardHeader>
-            <CardBody>
-              <Link href="/population-density">
-                <Button variant="primary" type="button">Open 3D density map</Button>
-              </Link>
-            </CardBody>
-          </Card>
-        </div>
-        <div className="grid-span-6">
+        <div className="grid-span-12">
           <Card variant="accent">
             <CardHeader>
               <CardHeaderMeta>
@@ -59,7 +44,7 @@ export default function ExperimentsPage() {
             <CardBody>
               <div className="surface-inline">
                 <FlaskIcon width={16} height={16} />
-                <span>New population and combined heat overlays are now available from this sandbox hub.</span>
+                <span>Combined heat overlays and future experimental surfaces are available from this sandbox hub.</span>
               </div>
             </CardBody>
           </Card>

@@ -11,11 +11,11 @@ import { Button } from "../ui/Button";
 import styles from "./population-map.module.css";
 
 const INITIAL_VIEW_STATE = {
-  longitude: 90.3563,
-  latitude: 23.685,
-  zoom: 6.35,
-  pitch: 50,
-  bearing: -12,
+  longitude: 90.4,
+  latitude: 23.7,
+  zoom: 6.2,
+  pitch: 46,
+  bearing: 0,
   minZoom: 5.2,
   maxZoom: 12,
 };

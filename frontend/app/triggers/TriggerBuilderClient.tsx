@@ -38,6 +38,16 @@ function FitToBounds({ bounds }: { bounds?: L.LatLngBounds }) {
   return null;
 }
 
+function parseNumberInput(value: string, fallback: number): number {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function parseIntegerInput(value: string, fallback: number): number {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 export default function TriggerBuilderClient() {
   const [geoJson, setGeoJson] = useState<DistrictFeatureCollection | null>(null);
   const [temperatureMap, setTemperatureMap] = useState<TemperatureMap>({});
@@ -73,6 +83,10 @@ export default function TriggerBuilderClient() {
   }, []);
 
   const mapBounds = useMemo(() => (geoJson ? computeDistrictBounds(geoJson) : undefined), [geoJson]);
+  const parsedThreshold = parseNumberInput(hiThreshold, 40);
+  const parsedMinDays = Math.max(1, parseIntegerInput(minDays, 2));
+  const parsedProbThreshold = parseNumberInput(probThreshold, 0.7);
+  const parsedAnomThreshold = parseNumberInput(anomThreshold, 3);
 
   const districtRows = useMemo<TriggerPreviewRow[]>(() => {
     if (!geoJson) return [];
@@ -92,18 +106,15 @@ export default function TriggerBuilderClient() {
       const nearest = center ? findNearestPointId(center.lat, center.lng, availablePoints) : null;
       const temperature = nearest ? temperatureMap[nearest] ?? 33 : 33;
       const outlook = buildOutlookSeries(temperature, new Date(), 14);
-      const threshold = Number.parseFloat(hiThreshold);
-      const consecutiveDays = Number.parseInt(minDays, 10);
-      const probabilityCutoff = Number.parseFloat(probThreshold);
 
       let triggered = false;
-      for (let index = 0; index <= outlook.length - consecutiveDays; index += 1) {
-        const window = outlook.slice(index, index + consecutiveDays);
+      for (let index = 0; index <= outlook.length - parsedMinDays; index += 1) {
+        const window = outlook.slice(index, index + parsedMinDays);
         const scenarioKey = selectedScenario;
-        const meetsHeat = window.every((item) => item[scenarioKey] >= threshold);
-        const meetsProbability = estimateTierProbability(temperature) >= probabilityCutoff;
+        const meetsHeat = window.every((item) => item[scenarioKey] >= parsedThreshold);
+        const meetsProbability = estimateTierProbability(temperature) >= parsedProbThreshold;
         const meetsAnomaly =
-          useAnomaly === "yes" ? window.some((item) => item.anomaly >= Number.parseFloat(anomThreshold)) : true;
+          useAnomaly === "yes" ? window.some((item) => item.anomaly >= parsedAnomThreshold) : true;
         if (meetsHeat && meetsProbability && meetsAnomaly) {
           triggered = true;
           break;
@@ -121,7 +132,21 @@ export default function TriggerBuilderClient() {
       };
     });
     return rows.sort((a, b) => Number(b.triggered) - Number(a.triggered) || (b.temperature - a.temperature));
-  }, [anomThreshold, geoJson, hiThreshold, minDays, probThreshold, selectedScenario, temperatureMap, useAnomaly]);
+  }, [
+    geoJson,
+    parsedAnomThreshold,
+    parsedMinDays,
+    parsedProbThreshold,
+    parsedThreshold,
+    selectedScenario,
+    temperatureMap,
+    useAnomaly,
+  ]);
+
+  const districtRowBySlug = useMemo(
+    () => new globalThis.Map(districtRows.map((row) => [row.slug, row])),
+    [districtRows]
+  );
 
   useEffect(() => {
     if (!selectedDistrict && districtRows[0]) {
@@ -131,7 +156,8 @@ export default function TriggerBuilderClient() {
 
   const selectedRow = districtRows.find((row) => row.slug === selectedDistrict) || districtRows[0] || null;
   const affectedCount = districtRows.filter((row) => row.triggered).length;
-  const ruleSummary = `Trigger when HI ${selectedScenario.toUpperCase()} ≥ ${hiThreshold}°C for ${minDays}+ days with probability ≥ ${formatPercent(Number.parseFloat(probThreshold))}${useAnomaly === "yes" ? ` and anomaly ≥ ${anomThreshold}°C` : ""}.`;
+  const ruleSummary = `Trigger when HI ${selectedScenario.toUpperCase()} ≥ ${parsedThreshold.toFixed(1)}°C for ${parsedMinDays}+ days with probability ≥ ${formatPercent(parsedProbThreshold)}${useAnomaly === "yes" ? ` and anomaly ≥ ${parsedAnomThreshold.toFixed(1)}°C` : ""}.`;
+  const previewLayerKey = `${selectedScenario}:${parsedThreshold}:${parsedMinDays}:${parsedProbThreshold}:${useAnomaly}:${parsedAnomThreshold}:${selectedDistrict}:${affectedCount}`;
 
   const recommendation = selectedRow?.triggered
     ? {
@@ -245,12 +271,15 @@ export default function TriggerBuilderClient() {
                     <FitToBounds bounds={mapBounds} />
                     <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                     <GeoJSON
+                      key={previewLayerKey}
                       data={geoJson as never}
                       ref={(value) => {
                         geoRef.current = (value as L.GeoJSON | null) ?? null;
                       }}
                       style={(feature) => {
-                        const row = districtRows.find((item) => item.slug === districtSlug(districtName((feature?.properties as Record<string, string> | undefined) ?? undefined)));
+                        const row = districtRowBySlug.get(
+                          districtSlug(districtName((feature?.properties as Record<string, string> | undefined) ?? undefined))
+                        );
                         const isSelected = row?.slug === selectedDistrict;
                         return {
                           color: isSelected ? "#fff" : "rgba(255,255,255,0.12)",
@@ -261,7 +290,7 @@ export default function TriggerBuilderClient() {
                       }}
                       onEachFeature={(feature, layer) => {
                         const label = districtName(feature.properties as Record<string, string> | undefined);
-                        const row = districtRows.find((item) => item.slug === districtSlug(label));
+                        const row = districtRowBySlug.get(districtSlug(label));
                         layer.on("click", () => setSelectedDistrict(districtSlug(label)));
                         layer.bindTooltip(`${label}<br/>${row?.triggered ? "Trigger candidate" : "No trigger"} · ${formatTemperature(row?.temperature)}`);
                       }}

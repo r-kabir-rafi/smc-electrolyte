@@ -10,6 +10,7 @@ export interface DistrictSpikeData extends BangladeshDistrictPopulation2022 {
   longitude: number;
   latitude: number;
   density_normalized: number;
+  density_visual_score: number;
   feature: Feature<Geometry, GeoJsonProperties> | null;
   district_slug: string;
 }
@@ -37,8 +38,8 @@ export interface DistrictWithHeat extends DistrictSpikeData {
 }
 
 const BANGLADESH_FALLBACK_COORDS = { longitude: 90.3563, latitude: 23.685 };
-const MIN_SPIKES_PER_DISTRICT = 34;
-const MAX_SPIKES_PER_DISTRICT = 190;
+const MIN_SPIKES_PER_DISTRICT = 20;
+const MAX_SPIKES_PER_DISTRICT = 110;
 
 type BBox = {
   minLon: number;
@@ -232,16 +233,25 @@ export async function loadBangladeshDistrictGeoJson(): Promise<DistrictFeatureCo
 
 export function buildSpikeData(geojson: DistrictFeatureCollection): DistrictSpikeData[] {
   const maxDensity = Math.max(...BANGLADESH_DISTRICT_POPULATION_2022.map((item) => item.density));
+  const maxPopulation = Math.max(...BANGLADESH_DISTRICT_POPULATION_2022.map((item) => item.population));
 
   return BANGLADESH_DISTRICT_POPULATION_2022.map((district) => {
     const feature = findFeature(geojson, district) ?? null;
     const coords = feature ? getFeatureCentroid(feature) : BANGLADESH_FALLBACK_COORDS;
+    const densityNormalized = district.density / maxDensity;
+    const densityVisualScore = clamp(
+      (Math.log1p(district.density) / Math.log1p(maxDensity)) * 0.58 +
+        Math.sqrt(district.population / maxPopulation) * 0.42,
+      0,
+      1
+    );
 
     return {
       ...district,
       longitude: coords.longitude,
       latitude: coords.latitude,
-      density_normalized: district.density / maxDensity,
+      density_normalized: densityNormalized,
+      density_visual_score: densityVisualScore,
       feature: feature ? asFeature(feature) : null,
       district_slug: canonicalDistrictName(district.district),
     };
@@ -252,10 +262,12 @@ export function buildPopulationSpikeField(districts: DistrictSpikeData[]): Popul
   return districts.flatMap((district) => {
     const random = createSeededRandom(hashString(`${district.pcode}:${district.density}`));
     const polygons = district.feature ? toPolygonSet(district.feature.geometry) : [];
-    const areaWeight = clamp(district.area_km2 / 42, 0, 72);
-    const densityWeight = 18 + district.density_normalized * 118;
-    const spikeCount = Math.round(clamp(areaWeight + densityWeight, MIN_SPIKES_PER_DISTRICT, MAX_SPIKES_PER_DISTRICT));
-    const baseHeight = 3500 + district.density_normalized ** 1.6 * 128000;
+    const areaWeight = clamp(district.area_km2 / 82, 6, 40);
+    const populationWeight = Math.sqrt(district.population / 10278882) * 24;
+    const spikeCount = Math.round(
+      clamp(10 + areaWeight + populationWeight + district.density_visual_score * 34, MIN_SPIKES_PER_DISTRICT, MAX_SPIKES_PER_DISTRICT)
+    );
+    const baseHeight = 1800 + district.density_visual_score ** 1.25 * 42000;
 
     return Array.from({ length: spikeCount }, (_, index) => {
       const sampledPoint =
@@ -269,8 +281,8 @@ export function buildPopulationSpikeField(districts: DistrictSpikeData[]): Popul
               latitude: district.latitude + (random() - 0.5) * 0.04,
             };
 
-      const intensity = clamp(0.12 + district.density_normalized * 0.72 + random() * 0.26, 0.08, 1);
-      const heightVariance = 0.28 + random() * 1.1;
+      const intensity = clamp(0.18 + district.density_visual_score * 0.42 + random() * 0.16, 0.12, 0.78);
+      const heightVariance = 0.52 + random() * 0.48;
 
       return {
         id: `${district.pcode}-${index}`,

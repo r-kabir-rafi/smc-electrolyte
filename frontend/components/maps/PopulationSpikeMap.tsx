@@ -1,6 +1,5 @@
 "use client";
 
-import { AmbientLight, DirectionalLight, LightingEffect } from "@deck.gl/core";
 import DeckGL from "@deck.gl/react";
 import { ColumnLayer, GeoJsonLayer } from "@deck.gl/layers";
 import { useMemo, useState } from "react";
@@ -9,9 +8,7 @@ import maplibregl from "maplibre-gl";
 
 import {
   buildGeoJsonForDeck,
-  buildPopulationSpikeField,
   type DistrictSpikeData,
-  type PopulationSpikePoint,
 } from "../../lib/populationMapData";
 import { Button } from "../ui/Button";
 import styles from "./population-map.module.css";
@@ -22,18 +19,9 @@ const INITIAL_VIEW_STATE = {
   zoom: 6.35,
   pitch: 50,
   bearing: -12,
-  minZoom: 5.3,
+  minZoom: 5.2,
   maxZoom: 12,
 };
-
-const COLUMN_RADIUS = 220;
-const ambientLight = new AmbientLight({ color: [255, 252, 246], intensity: 1.3 });
-const directionalLight = new DirectionalLight({
-  color: [255, 235, 225],
-  intensity: 2.8,
-  direction: [-3.5, -7.5, -11],
-});
-const effects = [new LightingEffect({ ambientLight, directionalLight })];
 
 const MAP_STYLE = {
   version: 8,
@@ -52,26 +40,32 @@ const MAP_STYLE = {
   layers: [{ id: "carto-base", type: "raster", source: "carto" }],
 } as const;
 
-function interpolateChannel(start: number, end: number, ratio: number): number {
-  return Math.round(start + (end - start) * ratio);
-}
+function densityFillColor(score: number, highlighted: boolean): [number, number, number, number] {
+  const clamped = Math.max(0, Math.min(1, score));
+  const low: [number, number, number] = [101, 163, 255];
+  const mid: [number, number, number] = [159, 116, 255];
+  const high: [number, number, number] = [235, 79, 154];
 
-function spikeColor(intensity: number, highlighted: boolean): [number, number, number, number] {
-  const clamped = Math.max(0, Math.min(1, intensity));
-  const gradient =
-    clamped < 0.45
+  const mix = (start: number, end: number, t: number) => Math.round(start + (end - start) * t);
+  const base =
+    clamped < 0.55
       ? [
-          interpolateChannel(85, 115, clamped / 0.45),
-          interpolateChannel(82, 70, clamped / 0.45),
-          interpolateChannel(235, 255, clamped / 0.45),
+          mix(low[0], mid[0], clamped / 0.55),
+          mix(low[1], mid[1], clamped / 0.55),
+          mix(low[2], mid[2], clamped / 0.55),
         ]
       : [
-          interpolateChannel(115, 194, (clamped - 0.45) / 0.55),
-          interpolateChannel(70, 18, (clamped - 0.45) / 0.55),
-          interpolateChannel(255, 82, (clamped - 0.45) / 0.55),
+          mix(mid[0], high[0], (clamped - 0.55) / 0.45),
+          mix(mid[1], high[1], (clamped - 0.55) / 0.45),
+          mix(mid[2], high[2], (clamped - 0.55) / 0.45),
         ];
 
-  return [gradient[0], gradient[1], gradient[2], highlighted ? 255 : 210];
+  return [base[0], base[1], base[2], highlighted ? 255 : 214];
+}
+
+function densityChoroplethColor(score: number): [number, number, number, number] {
+  const clamped = Math.max(0, Math.min(1, score));
+  return densityFillColor(clamped, false).slice(0, 4).map((value, index) => (index === 3 ? Math.round(58 + clamped * 58) : value)) as [number, number, number, number];
 }
 
 type HoverState = {
@@ -95,9 +89,8 @@ export function PopulationSpikeMap({
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
 
   const districtGeoJson = useMemo(() => buildGeoJsonForDeck(data), [data]);
-  const spikeField = useMemo(() => buildPopulationSpikeField(data), [data]);
-  const districtByPcode = useMemo(
-    () => new globalThis.Map(data.map((district) => [district.pcode, district])),
+  const densityByPcode = useMemo(
+    () => new globalThis.Map<string, DistrictSpikeData>(data.map((district) => [district.pcode, district])),
     [data]
   );
 
@@ -109,57 +102,63 @@ export function PopulationSpikeMap({
         filled: true,
         stroked: true,
         pickable: false,
-        getFillColor: [246, 244, 252, 36],
-        getLineColor: [102, 93, 177, 48],
-        lineWidthMinPixels: 0.4,
+        getFillColor: (feature: any) => {
+          const pcode = String(
+            feature.properties?.pcode ??
+              feature.properties?.ADM2_PCODE ??
+              feature.properties?.adm2_pcode ??
+              ""
+          );
+          const match = densityByPcode.get(pcode);
+          return densityChoroplethColor(match?.density_visual_score ?? 0);
+        },
+        getLineColor: (feature: any) => {
+          const pcode = String(feature.properties?.pcode ?? feature.properties?.ADM2_PCODE ?? "");
+          return pcode === selectedPcode ? [255, 255, 255, 100] : [57, 73, 98, 70];
+        },
+        lineWidthMinPixels: 0.8,
+        updateTriggers: {
+          getFillColor: [data],
+          getLineColor: [selectedPcode],
+        },
       }),
-      new ColumnLayer<PopulationSpikePoint>({
-        id: "population-density-spikes",
-        data: spikeField,
-        radius: COLUMN_RADIUS,
-        coverage: 0.72,
-        diskResolution: 6,
+      new ColumnLayer<DistrictSpikeData>({
+        id: "population-density-columns",
+        data,
+        radius: 7400,
+        diskResolution: 12,
         extruded: true,
         pickable: true,
         material: {
-          ambient: 0.32,
-          diffuse: 0.88,
-          shininess: 44,
+          ambient: 0.48,
+          diffuse: 0.74,
+          shininess: 18,
           specularColor: [255, 255, 255],
         },
-        getElevation: (point) => point.height_m * elevationScale,
-        getPosition: (point) => [point.longitude, point.latitude],
-        getFillColor: (point) => spikeColor(point.intensity, point.pcode === selectedPcode),
-        getLineColor: [255, 255, 255, 0],
-        lineWidthMinPixels: 0,
-        elevationScale,
+        getPosition: (district) => [district.longitude, district.latitude],
+        getElevation: (district) => district.density_visual_score * 98000 * elevationScale,
+        getFillColor: (district) => densityFillColor(district.density_visual_score, district.pcode === selectedPcode),
+        getLineColor: (district) =>
+          district.pcode === selectedPcode ? [255, 255, 255, 130] : [255, 255, 255, 35],
+        lineWidthMinPixels: 0.6,
         onHover: (info) => {
           if (!info.object) {
             setHoverState(null);
             return;
           }
-          const district = districtByPcode.get(info.object.pcode);
-          if (!district) {
-            setHoverState(null);
-            return;
-          }
-          setHoverState({ district, x: info.x, y: info.y });
+          setHoverState({ district: info.object, x: info.x, y: info.y });
         },
         onClick: (info) => {
-          if (!info.object) return;
-          const district = districtByPcode.get(info.object.pcode);
-          if (district) {
-            onDistrictClick?.(district);
-          }
+          if (info.object) onDistrictClick?.(info.object);
         },
         updateTriggers: {
-          getFillColor: [spikeField, selectedPcode],
+          getFillColor: [data, selectedPcode],
           getLineColor: [selectedPcode],
-          getElevation: [spikeField, elevationScale],
+          getElevation: [data, elevationScale],
         },
       }),
     ],
-    [districtByPcode, districtGeoJson, elevationScale, onDistrictClick, selectedPcode, spikeField]
+    [data, densityByPcode, districtGeoJson, elevationScale, onDistrictClick, selectedPcode]
   );
 
   const densestDistricts = useMemo(
@@ -171,7 +170,6 @@ export function PopulationSpikeMap({
     <div className={styles.mapShell}>
       <DeckGL
         controller={{ dragRotate: true, touchRotate: true }}
-        effects={effects}
         layers={layers}
         viewState={viewState}
         onViewStateChange={(event) => setViewState(event.viewState as typeof INITIAL_VIEW_STATE)}
@@ -181,6 +179,7 @@ export function PopulationSpikeMap({
       </DeckGL>
 
       <div className={styles.controlStack}>
+        <span className={styles.overlayPill}>Columns = district density</span>
         <Button type="button" variant="secondary" onClick={() => setViewState(INITIAL_VIEW_STATE)}>
           Reset View
         </Button>
@@ -220,6 +219,11 @@ export function PopulationSpikeMap({
             <TooltipRow
               label="Density"
               value={`${hoverState.district.density.toLocaleString()} /km²`}
+              mono
+            />
+            <TooltipRow
+              label="Visual balance"
+              value={`${Math.round(hoverState.district.density_visual_score * 100)} / 100`}
               mono
             />
           </div>

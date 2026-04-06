@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import type { DistrictWithHeat } from "../lib/populationMapData";
 import { calculateDistrictDemand } from "../lib/demandCalculation";
 import { Card, CardBody, CardHeader, CardHeaderMeta, CardTitle, CardCaption } from "./ui/Card";
-import { Field, Input } from "./ui/Field";
+import { Input } from "./ui/Field";
 import { TierBadge } from "./ui/TierBadge";
 
 type ResultRow = DistrictWithHeat & ReturnType<typeof calculateDistrictDemand>;
@@ -56,8 +56,8 @@ export function DemandCalculatorPanel({
           </CardHeaderMeta>
         </CardHeader>
         <CardBody>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem" }}>
-            <Field label="Base rate (units/person/day)">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem", alignItems: "start" }}>
+            <CalculatorField label="Base rate (units/person/day)">
               <Input
                 type="number"
                 min="0.01"
@@ -66,8 +66,8 @@ export function DemandCalculatorPanel({
                 value={String(baseRate)}
                 onChange={(event) => setBaseRate(Number.parseFloat(event.target.value) || 0.05)}
               />
-            </Field>
-            <Field label="Pack size (units/case)">
+            </CalculatorField>
+            <CalculatorField label="Pack size (units/case)">
               <Input
                 type="number"
                 min="1"
@@ -75,7 +75,7 @@ export function DemandCalculatorPanel({
                 value={String(packSize)}
                 onChange={(event) => setPackSize(Number.parseInt(event.target.value, 10) || 24)}
               />
-            </Field>
+            </CalculatorField>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "0.75rem" }}>
@@ -154,6 +154,38 @@ export function DemandCalculatorPanel({
         </CardBody>
       </Card>
     </div>
+  );
+}
+
+function CalculatorField({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.45rem",
+      }}
+    >
+      <span
+        style={{
+          color: "var(--text-tertiary)",
+          fontSize: "0.72rem",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          lineHeight: 1.35,
+          minHeight: "1.95rem",
+        }}
+      >
+        {label}
+      </span>
+      {children}
+    </label>
   );
 }
 
@@ -248,4 +280,3 @@ function DemandTierBadge({
     </span>
   );
 }
-
