@@ -1,0 +1,56 @@
+.mapWrap {
+  min-height: 26rem;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+}
+
+.toggleRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chartTall {
+  height: 20rem;
+}
+
+.chartMedium {
+  height: 18rem;
+}
+
+.triggerCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.triggerLead {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.triggerSub {
+  margin-top: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.triggerMeta {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .mapWrap {
+    min-height: 21rem;
+  }
+
+  .chartTall,
+  .chartMedium {
+    height: 15rem;
+  }
+}

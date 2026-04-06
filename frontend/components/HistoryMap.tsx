@@ -221,6 +221,7 @@ export default function HistoryMap({ currentDate, activeMode, dataMode = "monthl
       <MapContainer
         center={[23.685, 90.356]}
         zoom={6.5}
+        scrollWheelZoom={false}
         style={{ height: "100%", width: "100%", background: "transparent" }}
         ref={mapRef}
         zoomControl={false}

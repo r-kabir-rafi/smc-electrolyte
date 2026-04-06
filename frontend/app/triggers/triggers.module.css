@@ -1,0 +1,107 @@
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.editorFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mapPreview {
+  min-height: 20rem;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+}
+
+.affectedList {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.affectedRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.affectedRow:hover {
+  background: var(--bg-overlay);
+}
+
+.quietLabel {
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+}
+
+.recommendationStack {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.recommendationHero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.recommendationHero strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.recommendationHero p {
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+}
+
+.recommendationMeta {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.recommendationList {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.recommendationList div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.recommendationLabel {
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 767px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mapPreview {
+    min-height: 16rem;
+  }
+}
