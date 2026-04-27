@@ -33,7 +33,7 @@ function FitToBounds({ bounds }: { bounds?: L.LatLngBounds }) {
   const map = useMap();
   useEffect(() => {
     if (!bounds) return;
-    map.fitBounds(bounds.pad(0.05));
+    map.fitBounds(bounds.pad(0.01), { maxZoom: 8 });
   }, [bounds, map]);
   return null;
 }
@@ -59,23 +59,46 @@ export default function TriggerBuilderClient() {
   const [useAnomaly, setUseAnomaly] = useState("yes");
   const [anomThreshold, setAnomThreshold] = useState("3.0");
   const [error, setError] = useState("");
+  const [warning, setWarning] = useState("");
   const geoRef = useRef<L.GeoJSON | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      try {
-        const geometry = await loadDistrictGeoJson();
-        const values = await fetchCurrentTemperatures(TEMPERATURE_POINTS);
-        if (cancelled) return;
-        setGeoJson(geometry);
-        setTemperatureMap(values);
-      } catch (loadError) {
-        if (!cancelled) setError(loadError instanceof Error ? loadError.message : "Failed to load trigger builder data.");
+      const [geometryResult, temperatureResult] = await Promise.allSettled([
+        loadDistrictGeoJson(),
+        fetchCurrentTemperatures(TEMPERATURE_POINTS),
+      ]);
+
+      if (cancelled) return;
+
+      if (geometryResult.status === "fulfilled") {
+        setGeoJson(geometryResult.value);
+        setError("");
+      } else {
+        setError(
+          geometryResult.reason instanceof Error
+            ? geometryResult.reason.message
+            : "Failed to load trigger builder data."
+        );
+        setWarning("");
+        return;
+      }
+
+      if (temperatureResult.status === "fulfilled") {
+        setTemperatureMap(temperatureResult.value);
+        setWarning("");
+      } else {
+        // Keep the map usable even if live temperatures fail.
+        setTemperatureMap({});
+        setWarning("Live temperatures are temporarily unavailable. Showing geometry-based preview.");
       }
     }
     load().catch(() => {
-      if (!cancelled) setError("Failed to load trigger builder data.");
+      if (!cancelled) {
+        setError("Failed to load trigger builder data.");
+        setWarning("");
+      }
     });
     return () => {
       cancelled = true;
@@ -167,9 +190,46 @@ export default function TriggerBuilderClient() {
       }
     : null;
 
+  const previewStyleForFeature = useMemo<L.StyleFunction<any>>(
+    () => (feature): L.PathOptions => {
+      const slug = districtSlug(districtName((feature?.properties as Record<string, string> | undefined) ?? undefined));
+      const row = districtRowBySlug.get(slug);
+      const isSelected = row?.slug === selectedDistrict;
+
+      return {
+        color: "rgba(255,255,255,0.18)",
+        weight: isSelected ? 2 : 1,
+        fillColor: getTierColor(row?.temperature),
+        fillOpacity: isSelected ? 0.88 : row?.triggered ? 0.74 : 0.56,
+      };
+    },
+    [districtRowBySlug, selectedDistrict]
+  );
+
+  const onEachPreviewFeature = (feature: { properties?: Record<string, string> }, layer: L.Layer) => {
+    const label = districtName(feature.properties);
+    const slug = districtSlug(label);
+    const row = districtRowBySlug.get(slug);
+
+    layer.bindTooltip(
+      `<strong>${label}</strong><br/>Tier ${row?.tier ?? 0} · ${formatTemperature(row?.temperature)}<br/>Prob(Tier ≥ 3): ${formatPercent(row?.probability)}`,
+      { sticky: true }
+    );
+
+    layer.on({
+      mouseover: (event) => {
+        const target = event.target as L.Path;
+        target.setStyle({ weight: 2, color: "#fff", fillOpacity: 0.9 });
+      },
+      mouseout: (event) => geoRef.current?.resetStyle(event.target),
+      click: () => setSelectedDistrict(slug),
+    });
+  };
+
   return (
     <main className="page-shell">
       {error ? <AlertBanner variant="critical" title="Trigger builder unavailable" description={error} /> : null}
+      {!error && warning ? <AlertBanner variant="warning" title="Partial data mode" description={warning} /> : null}
 
       <div className="page-header">
         <div>
@@ -180,7 +240,7 @@ export default function TriggerBuilderClient() {
       </div>
 
       <div className="dashboard-grid">
-        <div className="grid-span-4">
+        <div className="grid-span-3">
           <Card variant="elevated">
             <CardHeader>
               <CardHeaderMeta>
@@ -243,7 +303,7 @@ export default function TriggerBuilderClient() {
           </Card>
         </div>
 
-        <div className="grid-span-4">
+        <div className="grid-span-5">
           <Card variant="default">
             <CardHeader>
               <CardHeaderMeta>
@@ -263,8 +323,9 @@ export default function TriggerBuilderClient() {
                 <div className={styles.mapPreview}>
                   <MapContainer
                     center={[23.7, 90.4]}
-                    zoom={7}
+                    zoom={7.6}
                     bounds={mapBounds}
+                    attributionControl={false}
                     scrollWheelZoom={false}
                     style={{ height: "100%", width: "100%" }}
                   >
@@ -276,26 +337,18 @@ export default function TriggerBuilderClient() {
                       ref={(value) => {
                         geoRef.current = (value as L.GeoJSON | null) ?? null;
                       }}
-                      style={(feature) => {
-                        const row = districtRowBySlug.get(
-                          districtSlug(districtName((feature?.properties as Record<string, string> | undefined) ?? undefined))
-                        );
-                        const isSelected = row?.slug === selectedDistrict;
-                        return {
-                          color: isSelected ? "#fff" : "rgba(255,255,255,0.12)",
-                          weight: isSelected ? 2 : 1,
-                          fillColor: row?.triggered ? getTierColor(row.temperature) : "rgba(255,255,255,0.04)",
-                          fillOpacity: row?.triggered ? 0.8 : 0.2,
-                        };
-                      }}
-                      onEachFeature={(feature, layer) => {
-                        const label = districtName(feature.properties as Record<string, string> | undefined);
-                        const row = districtRowBySlug.get(districtSlug(label));
-                        layer.on("click", () => setSelectedDistrict(districtSlug(label)));
-                        layer.bindTooltip(`${label}<br/>${row?.triggered ? "Trigger candidate" : "No trigger"} · ${formatTemperature(row?.temperature)}`);
-                      }}
+                      style={previewStyleForFeature}
+                      onEachFeature={onEachPreviewFeature}
                     />
                   </MapContainer>
+                  <div className={styles.mapLegend}>
+                    {[0, 1, 2, 3, 4].map((tier) => (
+                      <div key={tier} className={styles.legendRow}>
+                        <span className={styles.legendSwatch} style={{ background: `var(--tier-${tier})` }} />
+                        <span>Tier {tier}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <EmptyState

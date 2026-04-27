@@ -1,5 +1,7 @@
 .mapWrap {
+  width: 100%;
   min-height: 26rem;
+  margin-inline: auto;
   overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-subtle);

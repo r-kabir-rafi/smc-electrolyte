@@ -165,7 +165,7 @@ export function HeatPopulationMap({
         onViewStateChange={(event) => setViewState(event.viewState as typeof INITIAL_VIEW_STATE)}
         style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0" }}
       >
-        <Map mapLib={maplibregl} mapStyle={MAP_STYLE as never} reuseMaps />
+        <Map mapLib={maplibregl} mapStyle={MAP_STYLE as never} reuseMaps attributionControl={false} />
       </DeckGL>
 
       <div className={styles.controlStack}>

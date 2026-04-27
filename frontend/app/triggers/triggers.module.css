@@ -13,10 +13,48 @@
 }
 
 .mapPreview {
-  min-height: 20rem;
+  position: relative;
+  width: 100%;
+  height: 20rem;
+  margin-inline: auto;
   overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-subtle);
+}
+
+.mapPreview :global(.leaflet-container) {
+  width: 100%;
+  height: 100%;
+}
+
+.mapLegend {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.8rem;
+  z-index: 5;
+  pointer-events: none;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  background: rgba(20, 20, 22, 0.86);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-md);
+}
+
+.legendRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.legendSwatch {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
 }
 
 .affectedList {
@@ -102,6 +140,12 @@
   }
 
   .mapPreview {
-    min-height: 16rem;
+    height: 16rem;
+  }
+
+  .mapLegend {
+    left: 0.6rem;
+    bottom: 0.6rem;
+    padding: 0.6rem 0.65rem;
   }
 }

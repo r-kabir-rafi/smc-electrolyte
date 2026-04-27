@@ -39,7 +39,7 @@ export function AlertBanner({
         <strong className={styles.alertTitle}>{title}</strong>
         <p className={styles.alertDescription}>{description}</p>
       </div>
-      <div style={{ display: "inline-flex", alignItems: "center", gap: "0.55rem" }}>
+      <div className={styles.alertActions}>
         {action}
         {dismissible ? (
           <Button aria-label="Dismiss alert" iconOnly variant="ghost" onClick={onDismiss} type="button">

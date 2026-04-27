@@ -303,9 +303,13 @@ export default function HomeMapClient() {
     return (
       <main className="page-shell">
         <div className="dashboard-grid">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="grid-span-3 skeleton" style={{ height: "11rem" }} />
-          ))}
+          <div className="grid-span-12">
+            <div className={styles.statGrid}>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="skeleton" style={{ height: "7.2rem", borderRadius: "var(--radius-lg)" }} />
+              ))}
+            </div>
+          </div>
           <div className="grid-span-7 skeleton" style={{ height: "34rem" }} />
           <div className="grid-span-5 skeleton" style={{ height: "34rem" }} />
         </div>
@@ -356,53 +360,49 @@ export default function HomeMapClient() {
       ) : null}
 
       <div className="dashboard-grid">
-        <div className="grid-span-3">
-          <StatCard
-            label="Districts Tier ≥ 3"
-            value={`${tierThreeCount}`}
-            trend={`${Math.round((tierThreeCount / Math.max(districtRows.length, 1)) * 100)}% of monitored map`}
-            trendDirection={tierThreeCount > 8 ? "up" : "neutral"}
-            trendSentiment="bad"
-            icon={<ThermometerIcon width={20} height={20} />}
-            accentColor="var(--tier-3)"
-            className="animate-fade-up"
-          />
-        </div>
-        <div className="grid-span-3">
-          <StatCard
-            label="Heat Exposure Footprint"
-            value={exposureShare}
-            trend="district share in elevated heat"
-            trendDirection="up"
-            trendSentiment="bad"
-            icon={<AlertTriangleIcon width={20} height={20} />}
-            accentColor="var(--tier-4)"
-            className="animate-fade-up"
-          />
-        </div>
-        <div className="grid-span-3">
-          <StatCard
-            label="Active Trigger Campaigns"
-            value={`${triggerCount}`}
-            trend={`${incidentDistrictCount} districts with verified incident signals`}
-            trendDirection={triggerCount > 0 ? "up" : "neutral"}
-            trendSentiment={triggerCount > 0 ? "bad" : "neutral"}
-            icon={<ExpandIcon width={20} height={20} />}
-            accentColor="var(--accent-primary)"
-            className="animate-fade-up"
-          />
-        </div>
-        <div className="grid-span-3">
-          <StatCard
-            label="Data Freshness"
-            value={temperatureCache ? "Live" : "Syncing"}
-            trend={temperatureCache ? `updated ${formatFetchedTime(temperatureCache.fetchedAt)}` : "acquiring weather feed"}
-            trendDirection="neutral"
-            trendSentiment="neutral"
-            icon={<InfoIcon width={20} height={20} />}
-            accentColor="var(--tier-1)"
-            className="animate-fade-up"
-          />
+        <div className="grid-span-12">
+          <div className={styles.statGrid}>
+            <StatCard
+              label="Districts Tier ≥ 3"
+              value={`${tierThreeCount}`}
+              trend={`${Math.round((tierThreeCount / Math.max(districtRows.length, 1)) * 100)}% of monitored map`}
+              trendDirection={tierThreeCount > 8 ? "up" : "neutral"}
+              trendSentiment="bad"
+              icon={<ThermometerIcon width={20} height={20} />}
+              accentColor="var(--tier-3)"
+              className={`${styles.compactStat} animate-fade-up`}
+            />
+            <StatCard
+              label="Heat Exposure Footprint"
+              value={exposureShare}
+              trend="district share in elevated heat"
+              trendDirection="up"
+              trendSentiment="bad"
+              icon={<AlertTriangleIcon width={20} height={20} />}
+              accentColor="var(--tier-4)"
+              className={`${styles.compactStat} animate-fade-up`}
+            />
+            <StatCard
+              label="Active Trigger Campaigns"
+              value={`${triggerCount}`}
+              trend={`${incidentDistrictCount} districts with verified incident signals`}
+              trendDirection={triggerCount > 0 ? "up" : "neutral"}
+              trendSentiment={triggerCount > 0 ? "bad" : "neutral"}
+              icon={<ExpandIcon width={20} height={20} />}
+              accentColor="var(--accent-primary)"
+              className={`${styles.compactStat} animate-fade-up`}
+            />
+            <StatCard
+              label="Data Freshness"
+              value={temperatureCache ? "Live" : "Syncing"}
+              trend={temperatureCache ? `updated ${formatFetchedTime(temperatureCache.fetchedAt)}` : "acquiring weather feed"}
+              trendDirection="neutral"
+              trendSentiment="neutral"
+              icon={<InfoIcon width={20} height={20} />}
+              accentColor="var(--tier-1)"
+              className={`${styles.compactStat} animate-fade-up`}
+            />
+          </div>
         </div>
 
         <div className="grid-span-7">
@@ -431,6 +431,7 @@ export default function HomeMapClient() {
                       center={[23.7, 90.4]}
                       zoom={7}
                       bounds={mapBounds}
+                      attributionControl={false}
                       scrollWheelZoom={false}
                       style={{ height: "100%", width: "100%" }}
                     >

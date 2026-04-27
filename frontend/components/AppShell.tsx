@@ -29,7 +29,7 @@ const navItems = [
   { href: "/forecasts", label: "Forecasts", icon: TrendingUpIcon },
   { href: "/incidents", label: "Incidents", icon: AlertTriangleIcon },
   { href: "/triggers", label: "Trigger Builder", icon: ZapIcon },
-  { href: "/heat-population", label: "Heat × Population", icon: LayersIcon },
+  { href: "/heat-population", label: "Heat x Population", icon: LayersIcon },
   { href: "/experiments", label: "Experiments", icon: FlaskIcon },
 ] as const;
 
@@ -48,7 +48,7 @@ const pageTitles: Record<string, string> = {
   "/history": "Forecasts",
   "/incidents": "Incidents",
   "/triggers": "Trigger Builder",
-  "/heat-population": "Heat × Population",
+  "/heat-population": "Heat x Population",
   "/experiments": "Experiments",
 };
 
@@ -57,6 +57,13 @@ function prettifySegment(segment: string): string {
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+}
+
+function matchesPath(pathname: string, href: string): boolean {
+  if (pathname === href) return true;
+  if (href === "/forecasts" && pathname === "/history") return true;
+  if (href === "/dashboard" && pathname === "/") return true;
+  return false;
 }
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -100,10 +107,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
           <nav className={styles.sidebarNav} aria-label="Primary navigation">
             {navItems.map(({ href, label, icon: Icon }) => {
-              const isActive =
-                currentPath === href ||
-                (href === "/forecasts" && currentPath === "/history") ||
-                (href === "/dashboard" && currentPath === "/");
+              const isActive = matchesPath(currentPath, href);
               return (
                 <Link
                   key={href}
@@ -143,7 +147,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <div className={styles.topBarTitle}>{pageTitle}</div>
             <div className={styles.breadcrumbs}>
               {breadcrumbs.map((crumb, index) => (
-                <span key={`${crumb}-${index}`} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                <span key={`${crumb}-${index}`} className={styles.crumb}>
                   {index > 0 ? <ChevronRightIcon width={12} height={12} /> : null}
                   <span>{crumb}</span>
                 </span>
@@ -175,16 +179,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className={styles.content}>{children}</main>
 
         <nav className={styles.mobileNav} aria-label="Mobile navigation">
-          {navItems.slice(0, 5).map(({ href, label, icon: Icon }) => {
-            const isActive =
-              currentPath === href ||
-              (href === "/forecasts" && currentPath === "/history") ||
-              (href === "/dashboard" && currentPath === "/");
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const isActive = matchesPath(currentPath, href);
             return (
               <Link
                 key={href}
                 href={href}
                 className={`${styles.mobileNavItem} ${isActive ? styles.mobileNavItemActive : ""}`.trim()}
+                aria-current={isActive ? "page" : undefined}
               >
                 <Icon width={16} height={16} />
                 <span>{label}</span>

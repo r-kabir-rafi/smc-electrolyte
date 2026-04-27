@@ -212,6 +212,7 @@ export default function DistrictDetailClient({ districtSlug: routeDistrictSlug }
                   center={[23.7, 90.4]}
                   zoom={7}
                   bounds={mapBounds}
+                  attributionControl={false}
                   scrollWheelZoom={false}
                   style={{ height: "100%", width: "100%" }}
                 >
